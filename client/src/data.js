@@ -9,14 +9,14 @@ export const sliderItems = [
     },
     {
       id: 2,
-      img: "https://img.freepik.com/free-vector/realistic-display-smartphone-with-different-apps_52683-30241.jpg?w=740&t=st=1678796089~exp=1678796689~hmac=a5aff4c2bee2d5abb3934a4b679623218c166f7930bf714e699ca83dbd910a88",
-      title: "NEW ITEMS ADDED!",
+      img: "https://plus.unsplash.com/premium_photo-1678101157405-762bb5094cf9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bmV3JTIwaXRlbXN8ZW58MHx8MHx8fDA%3D",
+      title: "NEW ITEMS!",
       desc: "FRESHLY ADDED COLLECTIONS. CHECK THEM OUT",
       bg: "fcf1ed",
     },
     {
       id: 3,
-      img: "https://www.vippng.com/png/detail/183-1832594_electronics-items-images-hd.png",
+      img: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Z3JvY2VyaWVzfGVufDB8fDB8fHww",
       title: "DAILY NEEDS!",
       desc: "WHATEVER YOU MIGHT NEED, WE HAVE IT",
       bg: "f5fafd",

@@ -8,10 +8,6 @@ import Newsletter from "../components/Newsletter";
 import Products from "../components/Products";
 import Slider from "../components/Slider";
 
-
-
-/* rafce created this function */
-
 const Home = () => {
   return (
     <div>

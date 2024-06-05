@@ -16,7 +16,8 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 20%
+  opacity: 30%;
+  filter: blur(2px);
 `;
 
 const Info = styled.div`
@@ -39,20 +40,22 @@ const Title = styled.h1`
 `;
 
 const Button = styled.button`
-  padding: 8px;
-  border: 3px solid teal;
-  background-color: white;
-  border-radius:10px;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 15px;
-  color: black;
-  width: 150%;
-  justify-content: center;
-  
-  &:hover{
-      background-color: #f8f4f9;
-  }
+padding: 8px 15px;
+border: 2px solid teal;
+color:teal;
+background-color: white;
+cursor: pointer;
+font-weight: 600;
+font-size: 15px;
+border-radius:10px;
+transition: all 200ms ease;
+
+&:hover{
+    // background-color: #f8f4f9;
+    background-color: teal;
+    color:white;
+    
+}
     
 `;
 

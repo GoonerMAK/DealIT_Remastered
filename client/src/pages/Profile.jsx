@@ -51,7 +51,7 @@ const ProfileInfo = styled.div`
 `;
 
 const Text = styled.p`
-  border: 0.0625rem solid gray;
+  border: 0.0625rem solid teal;
   padding: 0.625rem;
   width: 25rem;
   border-radius: 0.3125rem;
@@ -61,8 +61,6 @@ const Text = styled.p`
 
 const Label = styled.label`
   font-size: larger;
-  margin-top: 0.625rem;
-  padding-bottom: 0.625rem;
 `;
 
 const Info = styled.div`
@@ -71,8 +69,15 @@ const Info = styled.div`
 `;
 
 const Icon = styled.span`
-  margin-bottom: -0.3125rem;
+  padding-bottom: -0.5rem;
+  margin-right: 0.3rem;
+`;
+
+const Position = styled.div`
   margin-right: 0.125rem;
+  display:flex;
+  margin:auto;
+  color:teal;
 `;
 
 
@@ -85,44 +90,44 @@ const Profile = () => {
     <Announcement />
     <Navbar />
     <ProfileContainer>
-        <Sidebar />
+        <Sidebar activePage={"EditProfile"} />
         <ProfileRight>
           <div className="profileRightTop">
             <ProfileCover>
               <ProfileUserImg
-                src="https://www.freeiconspng.com/thumbs/profile-icon-png/am-a-19-year-old-multimedia-artist-student-from-manila--21.png"
+                src="https://static-00.iconduck.com/assets.00/avatar-default-icon-494x512-ybacs9gb.png"
                 alt="Profile Cover"
               />
             </ProfileCover>
             <ProfileInfo>
-              <div className="info">
-                <Icon className="icon">
+              <Info>
+                <Position><Icon className="icon">
                   <PersonIcon />
                 </Icon>
-                <Label className="label">Name</Label>
+                <Label className="label">Name</Label></Position>
                 <Text className="text">{user.username}</Text>
-              </div>
-              <div className="info">
-                <Icon className="icon">
+              </Info>
+              <Info>
+                <Position><Icon className="icon">
                   <EmailIcon />
                 </Icon>
-                <Label className="label">Email</Label>
+                <Label className="label">Email</Label></Position>
                 <Text className="text">{user.email}</Text>
-              </div>
-              <div className="info">
-                <Icon className="icon">
+              </Info>
+              <Info>
+                <Position><Icon className="icon">
                   <PhoneIcon />
                 </Icon>
-                <Label className="label">Phone</Label>
+                <Label className="label">Phone</Label></Position>
                 <Text className="text">{user.Phone}</Text>
-              </div>
-              <div className="info">
-                <Icon className="icon">
+              </Info>
+              <Info>
+                <Position><Icon className="icon">
                   <AssignmentIndIcon />
                 </Icon>
-                <Label className="label">NID</Label>
+                <Label className="label">NID</Label></Position>
                 <Text className="text">{user.NID}</Text>
-              </div>
+              </Info>
             </ProfileInfo>
           </div>
           <div className="profileRightBottom"></div>

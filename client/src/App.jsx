@@ -19,7 +19,7 @@ import RequestsExchange from "./pages/RequestsExchange";
 import MyexchangeRentproducts from "./pages/MyExchangeRentproducts";
 import Myproducts from "./pages/Myproducts"
 
-import { BrowserRouter as Router, Routes, Route, Redirect, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 
 
@@ -37,8 +37,8 @@ const App = () => {
         <Route path="/products/:category" element={<ProductList/>}>
         </Route>
 
-        <Route path="/ProductList" element={<Home/>}>
-        </Route>
+        {/* <Route path="/ProductList" element={<Home/>}>
+        </Route> */}
 
         <Route path="/product/:id" element={<Product/>}>          
         </Route>
@@ -67,14 +67,14 @@ const App = () => {
         <Route path="/PendingRequests" element={<PendingRequests/>}>
         </Route>
 
-        <Route path="/RequestsExchange" element={ <RequestsExchange/> }>
-        </Route>
+         {/* <Route path="/RequestsExchange" element={ <RequestsExchange/> }> 
+        </Route>  */}
 
-        <Route path="/RequestsExchanges" element={ <RequestsExchange/> }>
-        </Route>
+        {/* <Route path="/RequestsExchanges" element={ <RequestsExchange/> }>
+        </Route> */}
 
-        <Route path="/pendingrequest" element={ <Pendingrequest/> }>
-        </Route>
+        {/* <Route path="/pendingrequest" element={ <Pendingrequest/> }>
+        </Route> */}
 
         <Route path="/Myrentexchange" element={<MyexchangeRentproducts/>}>
         </Route>

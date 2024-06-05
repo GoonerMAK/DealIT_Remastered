@@ -9,74 +9,92 @@ import Footer from "../components/Footer";
 import Newsletter from "../components/Newsletter";
 
 
-const Selection= styled.select`
-width: 20%;
-padding: 10px;
-border: 1px solid #ccc;
-margin-bottom: 10px;
-margin-left: 600px;
-border-radius:5px;
+const Selection = styled.select`
+  width: 20%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 20px;
+  background-color: white;
 
-margin-top: 20px;
+  &:focus {
+    outline: none;
+  }
 `;
+
 
 const Container = styled.div`
-  height: 105vh;
+`;
+
+const FormContainer = styled.div`
+  min-height: 105vh;
   background-image: url(https://i.ibb.co/rFCz9rL/addition-page-background.png);
+  background-attachment: fixed;
+  background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  padding:10px 0;
+`;
+
+const DropdownContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 
-const Addition = ()=>{
+const Addition = () => {
 
-    const[selected, setselected]=useState('')
-    const[exchange, setexchange]=useState('')
-    const[sell, setsell]= useState(true)
-    const[rent, setrent]=useState('')
-    
+    const [selected, setselected] = useState('')
+    const [exchange, setexchange] = useState('')
+    const [sell, setsell] = useState(true)
+    const [rent, setrent] = useState('')
 
-    const handleselect = (e)=>{
+
+    const handleselect = (e) => {
         setselected(e.target.value)
         Check()
     }
-    const Check = ()=>{
-        if(selected === "Exchange"){
+    const Check = () => {
+        if (selected === "Exchange") {
             setexchange(true)
             setrent(false)
             setsell(false)
-        }else if(selected === 'Rent'){
+        } else if (selected === 'Rent') {
             setrent(true)
             setexchange(false)
             setsell(false)
-        }else if(selected === "Sell"){
+        } else if (selected === "Sell") {
             setsell(true)
             setrent(false)
             setexchange(false)
         }
     }
-    return(
+    return (
         <>
-    <Container>
-        <Announcement />
-    <Navbar/>          
-        
-        <div>
-        <Selection  value={selected} onChange={handleselect}>
-            <option value="Sell">Sell</option>
-            <option value="Rent">Rent</option>
-            <option value="Exchange">Exchange</option>      {/*value={exchange} onSelect={setexchange(true)}*/}
-            <option>others</option>
-        </Selection>
-        </div>
-        {exchange && <Addexchangeproduct/>}
-        {sell && <Addsell/>}
-        {rent && <Addrent/>}
+            <Container>
+                <Announcement />
+                <Navbar />
 
-    </Container>
-    <Newsletter/>
-    <Footer />
-    </>
+                <FormContainer>
+
+                    <DropdownContainer>
+                        <Selection value={selected} onChange={handleselect}>
+                            <option value="Sell">Sell</option>
+                            <option value="Rent">Rent</option>
+                            <option value="Exchange">Exchange</option>      {/*value={exchange} onSelect={setexchange(true)}*/}
+                            <option>others</option>
+                        </Selection>
+                    </DropdownContainer>
+                    {exchange && <Addexchangeproduct />}
+                    {sell && <Addsell />}
+                    {rent && <Addrent />}
+                </FormContainer>
+            </Container>
+            <Newsletter />
+            <Footer />
+        </>
     )
 }
 export default Addition

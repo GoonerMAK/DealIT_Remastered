@@ -2,12 +2,13 @@ import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from "@m
 import styled from "styled-components";
 import React from "react";
 import { Link } from "react-router-dom";
-  
+
 const Info = styled.div`
   opacity: 0;
   width: 100%;
   height: 100%;
   position: absolute;
+  border-radius:7px;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.2);
@@ -23,13 +24,14 @@ const Container = styled.div`
   flex: 1;
   margin: 5px;
   min-width: 330px;
-  height: 330px;
+  height: 380px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #f5fbfd;
   position: relative;
   flex-direction: column;
+  border-radius:8px;
 
 
   &:hover ${Info}{        /* only applying hovering effect for "Info" inside the container */
@@ -46,7 +48,7 @@ const Circle = styled.div`
 `;
 
 const Image = styled.img`
-  height: 55%;
+  height: 50%;
   z-index: 2;        /* the image will be in front of the circle */
   margin-bottom: 10px;
 `;
@@ -55,7 +57,9 @@ const Description = styled.div`,
   z-index: 2;
   display: flex;
   flex-direction: column;
-  width: 70%;
+  align-items: flex-start;
+  width: 50%;
+  padding:20px;
 `
 
 const Icon = styled.div`
@@ -74,22 +78,44 @@ const Icon = styled.div`
   }
 `;
 
+const Paragraph = styled.p`
+  margin-bottom: 5px;
+`;
+
+const Title = styled.span`
+  font-size: 20px;
+  color: teal;
+`;
+
+const Type = styled.span`
+  font-size: 15px;
+`;
+
+const Price = styled.span`
+  font-size:16px;
+  padding:2px 7px;
+  background-color:teal;
+  color:white;
+  border-radius:5px;
+  `
+
 
 
 const Product = ({ item }) => {
   return (
     <Container>
-      
+
       <Image src={item.img} />
-      
+
       <Description>
-        <p><strong>Title</strong> : {item.title}</p>
-        <p> {item.desc}</p>
-        <p> <strong>Category</strong> :{item.category}</p>
-        <p> <strong>Price</strong> :{item.price}/=</p>
-        <p> <strong>Type</strong> :{item.type}</p>
+        <Paragraph><Title>{item.title}
+        </Title></Paragraph>
+          <Paragraph><Price>Tk {item.price}</Price></Paragraph>
+          <Paragraph>{item.desc}</Paragraph>
+          <Paragraph>{item.category}</Paragraph>
+          <Paragraph><Type><strong>Status: </strong>{item.type}</Type></Paragraph>
       </Description>
-      
+
 
       <Info>
         <Icon>
@@ -98,7 +124,7 @@ const Product = ({ item }) => {
 
         <Icon>
           <Link to={`/product/${item._id}`}>
-          <SearchOutlined />
+            <SearchOutlined />
           </Link>
         </Icon>
 
@@ -107,7 +133,7 @@ const Product = ({ item }) => {
         </Icon>
 
       </Info>
-      
+
     </Container>
   );
 };

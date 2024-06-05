@@ -44,6 +44,12 @@ const Input = styled.input`
   border: none;
   padding: 5px;
   font-size: 15px;
+  outline: none;
+  border-radius:4px;
+  &:focus {
+    outline: none;
+    // border: 1px solid teal;
+  }
 `;
 
 const Logo = styled.div`
