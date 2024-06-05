@@ -31,13 +31,13 @@ app.use((req, res, next) => {
 app.use(cors());
 app.use(express.json());
 // app.use("/api/users", userRoute);   // whenever we go to "/api/users" our application will use userRoute 
-app.use("/api/products", productRoute);
-app.use("/api/carts", cartRoute);
-app.use("/api/orders", orderRoute);
-app.use("/api/user", userRoutes)
-app.use("/api/Addition", addproductroute)
-app.use("/api/conversations", conversationRoute);
-app.use("/api/messages", messageRoute);
+app.use("/products", productRoute);
+app.use("/carts", cartRoute);
+app.use("/orders", orderRoute);
+app.use("/user", userRoutes)
+app.use("/Addition", addproductroute)
+app.use("/conversations", conversationRoute);
+app.use("/messages", messageRoute);
 
 
 
