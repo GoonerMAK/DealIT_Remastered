@@ -16,6 +16,7 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 20%
 `;
 
 const Info = styled.div`
@@ -33,7 +34,7 @@ const Info = styled.div`
 `;
 
 const Title = styled.h1`
-    color:white;
+    color:teal;
     margin-bottom: 20px;
 `;
 
@@ -41,6 +42,7 @@ const Button = styled.button`
   padding: 8px;
   border: 3px solid teal;
   background-color: white;
+  border-radius:10px;
   cursor: pointer;
   font-weight: 700;
   font-size: 15px;

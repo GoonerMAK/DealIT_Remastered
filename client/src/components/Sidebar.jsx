@@ -5,7 +5,6 @@ import StorageIcon from '@material-ui/icons/Storage';
 import StoreIcon from '@material-ui/icons/Store';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import React from 'react'
 
 
 const SidebarWrapper = styled.div`

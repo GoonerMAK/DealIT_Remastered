@@ -64,21 +64,35 @@ const InfoContainer = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 70px;
+  font-size: 60px;
+  color:teal;
 `;
 
 const Desc = styled.p`
   margin: 50px 0px;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 500;
   letter-spacing: 3px;
 `;
 
 const Button = styled.button`
-  padding: 10px;
-  font-size: 20px;
-  background-color: transparent;
-  cursor: pointer;
+padding: 8px;
+cursor: pointer;
+border: 2px solid teal;
+background-color: teal;
+color:white;
+font-weight: 600;
+font-size: 20px;
+border-radius:10px;
+transition: all 200ms ease;
+
+&:hover{
+    // background-color: #f8f4f9;
+    border: 2px solid teal;
+    color:teal;
+    background-color: white;
+    
+}
 `;
 
 

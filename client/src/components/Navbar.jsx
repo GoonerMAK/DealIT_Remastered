@@ -32,11 +32,12 @@ const Language = styled.span`
 `;
 
 const SearchContainer = styled.div`
-  border: 0.5px solid lightgray;
+  border: 0.5px solid #BEEFDA;
   display: flex;
   align-items: center;
   margin-left: 25px;
   padding: 5px;
+  border-radius:5px;
 `;
 
 const Input = styled.input`
@@ -88,12 +89,16 @@ const IconContainer = styled.div`
   &:hover .tooltip {
     text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.4);
   }
+  &:hover{
+    color:white;
+  }
 `
 
 const IconSpan = styled.span`
   display: block;
   height: 30px;
   width: 30px;
+  color:teal;
   background: white;
   border-radius: 50%;
   position: relative;
@@ -165,20 +170,26 @@ const ProfileContainer = styled(IconContainer)`
   &:hover ${IconSpan},
   &:hover ${Tooltip},
   &:hover ${Tooltip}:before {
-    background: teal;
+    background: teal;   
   }
 `
 
 const Button = styled.button`
   padding: 8px;
-  border: 3px solid teal;
+  border: 2px solid teal;
+  color:teal;
   background-color: white;
   cursor: pointer;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 15px;
+  border-radius:10px;
+  transition: all 200ms ease;
 
   &:hover{
-      background-color: #f8f4f9;
+      // background-color: #f8f4f9;
+      background-color: teal;
+      color:white;
+      
   }
 `
 
@@ -194,132 +205,133 @@ const Navbar = () => {
 
   const quantity = useSelector(state => state.cart.quantity)
 
-    return (
-        <Container>
-            <Wrapper>
-                <Left>
-                    <Language>EN</Language>   
-                    <SearchContainer>
-                        <Input placeholder="Search"/>
-                        <Search style={{color: "gray", fontSize: 20}}/>
-                    </SearchContainer>                 
-                </Left>
+  return (
+    <Container>
+      <Wrapper>
+        <Left>
+          <SearchContainer>
+            <Input placeholder="Search" />
+            <Search style={{ color: "teal", fontSize: 20, marginLeft: '5px', marginRight: '2px' }} />
+          </SearchContainer>
+        </Left>
 
-                <Center>
-                  <Link to= "/">
-                    <Logo>
-                         <img src="https://i.ibb.co/wsWfKKn/logo-spl.png" alt="logo-spl" /> 
-                    </Logo>
-                  </Link>
-                    
-                </Center>
+        <Center>
+          <Link to="/">
+            <Logo>
+              <img src="https://i.ibb.co/wsWfKKn/logo-spl.png" alt="logo" />
+            </Logo>
+          </Link>
 
-                <Right>
+        </Center>
 
-                
-              {user&&
+        <Right>
 
-                <MenuItem>
-                  <AddIconContainer>
-                    <Tooltip>Add Product</Tooltip>
-                    <Link to="/addition">
-                     <IconSpan>
-                      <Add/>
-                     </IconSpan>
-                     </Link>
-                  </AddIconContainer>
-                  
-                  <LeftPadding> </LeftPadding>
-                </MenuItem>  
-              }
 
-            {user&&
-                <MenuItem>
-                  <ChatContainer>
-                  <Link to="/messege">
-                    <Tooltip>Chats</Tooltip>
-                     <IconSpan>
-                      <Chat/>
-                     </IconSpan>
-                     </Link>
-                  </ChatContainer>
-                  
-                  <LeftPadding> </LeftPadding>
-                </MenuItem>
-              }
-              
+          {user &&
 
-                {user && (
-                  <div>
-                  <MenuItem>
-                  <ProfileContainer>
+            <MenuItem>
+              <AddIconContainer>
+                <Tooltip>Add Product</Tooltip>
+                <Link to="/addition">
+                  <IconSpan>
+                  <div style={{paddingTop:'2.5px'}}>
+                    <Add />
+                    </div>
+                    </IconSpan>
+                </Link>
+              </AddIconContainer>
+
+              <LeftPadding> </LeftPadding>
+            </MenuItem>
+          }
+
+          {user &&
+            <MenuItem>
+              <ChatContainer>
+                  <Tooltip>Chats</Tooltip>
+                <Link to="/messege">
+                  <IconSpan>
+                    <div style={{paddingTop:'4px'}}>
+                    <Chat />
+                    </div>
+                  </IconSpan>
+                </Link>
+              </ChatContainer>
+
+              <LeftPadding> </LeftPadding>
+            </MenuItem>
+          }
+
+
+          {user && (
+            <div>
+              <MenuItem>
+                <ProfileContainer>
                     <Tooltip>{user.email}</Tooltip>
-                     <IconSpan>
-                     <Link to="/Profile">
-                      <PersonOutline/>
-                      </Link>
-                     </IconSpan>
-                  </ProfileContainer>
-                  
-                  <LeftPadding> </LeftPadding>
-                </MenuItem>
-                 </div>
-                )}
-                
+                  <Link to="/Profile">
+                    <IconSpan>
+                    <div style={{paddingTop:'2px'}}>
+                      <PersonOutline />
+                      </div>
+                    </IconSpan>
+                  </Link>
+                </ProfileContainer>
 
-                {user && (
-                  <div>
-                <MenuItem>
-                  <Button onClick={handleClick}>Log out</Button>
-                 </MenuItem>
-                 </div>
-                )}
+                <LeftPadding> </LeftPadding>
+              </MenuItem>
+            </div>
+          )}
 
 
-                <MenuItem>
+          {user && (
+            <div>
+              <MenuItem>
+                <Button onClick={handleClick}>Log out</Button>
+              </MenuItem>
+            </div>
+          )}
 
-                {!user && (
-                <MenuItem>
+
+          <MenuItem>
+
+            {!user && (
+              <MenuItem>
                 <Link to="/login"><Button>Login</Button></Link>
                 <LeftPadding> </LeftPadding>
                 <Link to="/signup"><Button>Signup</Button></Link>
-                </MenuItem>
-                )}
-                  {/* <Link to="/signup">Register</Link>
+              </MenuItem>
+            )}
+            {/* <Link to="/signup">Register</Link>
                   <Link to="/login"> LogIN </Link> */}
-                    {/* <MenuItem>REGISTER</MenuItem>
+            {/* <MenuItem>REGISTER</MenuItem>
                     <MenuItem>SIGN IN</MenuItem> */}
-                    </MenuItem>
-
-                    
-                    <MenuItem>
-                    <LeftPadding> </LeftPadding>
-                    <CartContainer>
-                      <Tooltip> Cart </Tooltip>
-                      <IconSpan>
-                        <Link to="/Cart">
-                        <Badge badgeContent={quantity} color="primary">
-                        
-                        <ShoppingCartOutlined />
-                        </Badge>
-                        </Link>
-                      </IconSpan>
-
-                      </CartContainer>
-                      
-                    </MenuItem>
-                    
-
-                </Right>
-            </Wrapper>
-        </Container>
-      
-    );
-  };
-  
-  export default Navbar;
+          </MenuItem>
 
 
+          <MenuItem>
+            <LeftPadding> </LeftPadding>
+            <CartContainer>
+                <Tooltip> Cart </Tooltip>
+              <Link to="/Cart">
+                <IconSpan>
+                  <Badge badgeContent={quantity} color="primary">
+
+                <div style={{paddingTop:'4px'}}>
+                    <ShoppingCartOutlined /></div>
+                  </Badge>
+                </IconSpan>
+              </Link>
+
+            </CartContainer>
+
+          </MenuItem>
 
 
-// npm audit fix --force
+        </Right>
+      </Wrapper>
+    </Container>
+
+  );
+};
+
+export default Navbar;
