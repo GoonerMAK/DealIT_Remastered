@@ -29,7 +29,7 @@ const userSchema = new Schema({
   },
   verfied:{
     type: Boolean,
-    default: false
+    default: true
   }
 })
 
@@ -46,7 +46,7 @@ userSchema.statics.signup = async function(username, Phone, NID, email, password
   if (!validator.isStrongPassword(password)) {
     throw Error('Password not strong enough')
   }
-  if (password!=checkpassword){
+  if (password!==checkpassword){
     throw Error('Please enter same password to confirm')
   }
 
@@ -81,10 +81,10 @@ userSchema.statics.login = async function(email, password) {
   if (!match) {
     throw Error('Incorrect password')
   }
-  if(!user.verfied){
-    await mailsender(email)
-    throw Error('Your Email ID is not verified. An verfication mail has sent to your email')
-  }
+  // if(!user.verfied){
+  //   await mailsender(email)
+  //   throw Error('Your Email ID is not verified. An verfication mail has sent to your email')
+  // }
 
   return user
 }

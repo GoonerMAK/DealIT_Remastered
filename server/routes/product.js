@@ -65,7 +65,7 @@ router.get("/find/user/:id", async (req, res) => {
 });
 
 
-//GET ALL PRODUCTS
+// GET ALL PRODUCTS
 router.get("/", async (req, res) => {
   const qCategory = req.query.categories;
   const qfilter = req.query.filters;
@@ -74,7 +74,11 @@ router.get("/", async (req, res) => {
   try {
     let products;
     
-    if (!qfilter) {
+    if (!qCategory && !qfilter) {
+      products = await Product.find();
+    } else if (!qCategory) {
+      products = await Product.find({ categories: { $in: [qfilter] } });
+    } else if (!qfilter) {
       products = await Product.find({ purpose: qCategory });
     } else {
       products = await Product.find({ purpose: qCategory, categories: { $in: [qfilter] } });
@@ -86,6 +90,8 @@ router.get("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+
 //get product request
 router.get("/rentreq/:id", async (req, res)=>{
   try{
