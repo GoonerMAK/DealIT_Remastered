@@ -203,6 +203,20 @@ router.post("rentreq/sender/reject/:id", async(req, res)=>{
   }
 })
 
+router.get("/search/", async (req, res) => {
+  try {
+    const products = await Product.find({
+      title: {
+        $regex: req.query.search,
+        $options: "i",
+      },
+    });
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+})
+
 router.get("/exchangereq/:id", async (req, res)=>{
   try{
     const Id=req.params.id
