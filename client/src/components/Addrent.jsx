@@ -8,7 +8,7 @@ const Container = styled.div`
 max-width: 650px;
 margin: 0 auto;
 padding: 20px;
-background-color: #e9e9e9;
+background-color: rgba(255, 255, 255, 0.4);
 padding: 50px;
 border-radius:15px;
 margin-top: 20px;
@@ -17,37 +17,55 @@ margin-bottom: 50px;
 box-shadow: 0px 10px 10px rgba(0,0,0,0.5);
 `;
 
-const Title = styled.h3`
+const Title = styled.h1`
   text-align: center;
+  font-size:38px;
+  color:teal;
 `;
 
 const Label = styled.label`
-  font-weight: bold;
+font-weight: 600;
+  color:teal;
 `;
 
-const Input= styled.input`
+const Input = styled.input`
 width: 100%;
 padding: 10px;
-border: 1px solid #ccc;
+border: 1px solid teal;
 margin-bottom: 10px;
 border-radius:5px;
+&:focus {
+  outline: none;
+}
 `;
 
 const FileInput = styled.input`
   width: 100%;
   padding: 10px;
   border-radius:5px;
-  border: 1px solid #ccc;
+  border: 1px solid teal;
   background-color: #fff;
   margin-bottom: 10px;
+  &:focus {
+    outline: none;
+  }
 `;
 
-const Selection= styled.select`
-width: 100%;
-padding: 10px;
-border-radius:5px;
-border: 1px solid #ccc;
-margin-bottom: 10px;
+const Selection = styled.select`
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid teal;
+  margin-bottom: 10px;
+  color: teal; /* Default text color for options */
+  background-color: white;
+  &:focus {
+    outline: none;
+  }
+  option {
+    color: teal;
+    background-color: white;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -55,7 +73,7 @@ const SubmitButton = styled.button`
   background-color: teal;
   color: #fff;
   border: none;
-  border-radius:5px;
+  border-radius:25px;
   cursor: pointer;
   font-size: 15px;
   margin-top:10px;
@@ -63,6 +81,53 @@ const SubmitButton = styled.button`
     background-color: rgb(1, 163, 163);
   }
 `;
+
+const Message = styled.div`
+width:100%;
+text-align:center;
+font-size:16px;
+margin-top:5px;`
+
+const customStyles = {
+  control: (provided) => ({
+    ...provided,
+    border: '1px solid teal',
+    color: 'teal',
+    '&:hover': {
+      border: '1px solid teal',
+    },
+    '&:focus': {
+      outline: 'none',
+    },
+    boxShadow: 'none',
+  }),
+  // placeholder: (provided) => ({
+  //   ...provided,
+  //   color: 'teal',
+  // }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: 'teal',
+  }),
+  multiValue: (provided) => ({
+    ...provided,
+    backgroundColor: 'teal',
+    color: 'white',
+    borderRadius: '5px',
+  }),
+  multiValueLabel: (provided) => ({
+    ...provided,
+    color: 'white',
+  }),
+  multiValueRemove: (provided) => ({
+    ...provided,
+    color: 'white',
+    '&:hover': {
+      backgroundColor: 'teal',
+      color: 'white',
+    },
+  }),
+};
 
 const Addrent= ()=>{
   const { user } = useAuthContext()
@@ -75,6 +140,7 @@ const Addrent= ()=>{
   const [categories, setcategories]=useState()
   const [error, setError] = useState(null)
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [message, setMessage] = useState('')
 
   const optionList=[{value:"Electronics", label:"Electronics"},
   {value:"Pc Components", label:"Pc Components"},
@@ -118,6 +184,7 @@ const Addrent= ()=>{
   const handleSubmit = async (e) => {
     e.preventDefault()
     //add to the backend part 
+    setMessage('Please wait')
     console.log(user._id)
     //const formData = new FormData()
     const user_email= user.user._id
@@ -142,13 +209,14 @@ const Addrent= ()=>{
       setError(null)
       setcategories('')
       setprice('')
+      if (response.statusText === 'OK') { setMessage('Product added successfully!') }
       setimgfile('')
     }).catch((error)=>{
       if (error.response) {
         console.log(error.response);
-        console.log("server responded");
+        setMessage("server responded");
       } else if (error.request) {
-        console.log("network error");
+        setMessage("network error");
       } else {
         console.log(error);
       }
@@ -160,7 +228,7 @@ const Addrent= ()=>{
         <form className="create" onSubmit={handleSubmit}>
           <Title><h3>Add a New Product For Rent</h3></Title>
     
-          <Label>Product Title:</Label>
+          <Label>Product Title</Label>
           <Input 
             type="text"
             onChange={(e) => setTitle(e.target.value)}
@@ -168,7 +236,7 @@ const Addrent= ()=>{
             // className={emptyFields.includes('title') ? 'error' : ''}
           />
           
-          <Label>Price:</Label>
+          <Label>Price</Label>
           <Input 
             type="number"
             onChange={(e) => setprice(e.target.value)}
@@ -176,20 +244,20 @@ const Addrent= ()=>{
             // className={emptyFields.includes('load') ? 'error' : ''}
           />
     
-          <Label>Description:</Label>
+          <Label>Description</Label>
           <Input 
             type="text"
             onChange={(e) => setdesc(e.target.value)}
             value={desc}
             // className={emptyFields.includes('reps') ? 'error' : ''}
           />
-        <Label>Prefernce:</Label>
+        <Label>Preference</Label>
         <Selection value={prefer} onChange={e => setprefer(e.target.value)}>
             <option value="Weekly">weekly</option>
             <option value="Monthly">Monthly</option>
             <option value="Yearly">Yearly</option>
         </Selection>
-          <Label>Image:</Label>
+          <Label>Image</Label>
           <FileInput 
           type="file"
           name="photos"
@@ -198,7 +266,7 @@ const Addrent= ()=>{
            multiple
         // className={emptyFields.includes('reps') ? 'error' : ''}
       />
-      <Label>Catagory:</Label>
+      <Label>Catagory</Label>
           <div className="dropdown-container">
             <Select
               options={optionList}
@@ -207,9 +275,10 @@ const Addrent= ()=>{
               value={categories}
               isSearchable={true}
               isMulti
+              styles={customStyles}
             />
           </div>
-    
+          {message && <Message>{message}</Message>}
           <SubmitButton>Add Product</SubmitButton>
           {error && <div className="error">{error}</div>}
         </form>

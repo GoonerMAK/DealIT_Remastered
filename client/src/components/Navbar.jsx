@@ -180,9 +180,28 @@ const ProfileContainer = styled(IconContainer)`
   }
 `
 
-const Button = styled.button`
+const PrimaryButton = styled.button`
   padding: 8px;
   border: 2px solid teal;
+  color:teal;
+  background-color: white;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius:10px;
+  transition: all 200ms ease;
+
+  &:hover{
+      // background-color: #f8f4f9;
+      background-color: teal;
+      color:white;
+      
+  }
+`
+
+const SecondaryButton = styled.button`
+  padding: 8px;
+  border: none;
   color:teal;
   background-color: white;
   cursor: pointer;
@@ -292,7 +311,7 @@ const Navbar = () => {
           {user && (
             <div>
               <MenuItem>
-                <Button onClick={handleClick}>Log out</Button>
+                <PrimaryButton onClick={handleClick}>Log out</PrimaryButton>
               </MenuItem>
             </div>
           )}
@@ -302,9 +321,9 @@ const Navbar = () => {
 
             {!user && (
               <MenuItem>
-                <Link to="/login"><Button>Login</Button></Link>
+                <Link to="/signup"><SecondaryButton>Register</SecondaryButton></Link>
                 <LeftPadding> </LeftPadding>
-                <Link to="/signup"><Button>Signup</Button></Link>
+                <Link to="/login"><PrimaryButton>Login</PrimaryButton></Link>
               </MenuItem>
             )}
             {/* <Link to="/signup">Register</Link>
