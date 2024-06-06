@@ -193,7 +193,7 @@ const Addsell= ()=>{
 
       // console.log(formData)
       // console.log(formData.get(img))
-       axios.post('http://localhost:3000/api/Addition/addsell', //formData
+       axios.post('http://localhost:3000/Addition/addsell', //formData
         {user_email, title, desc, img, price, selectedCategories
       }, {
         headers:{

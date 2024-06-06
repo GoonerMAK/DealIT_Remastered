@@ -165,6 +165,7 @@ const Addrent= ()=>{
     var fileObject = e.target.files[0];
     setimgfile(fileObject);
   }
+
   const handleimagesave=()=>{
     const formData = new FormData()
       formData.append("file", imgfile)
@@ -193,7 +194,7 @@ const Addrent= ()=>{
     handleimagesave()
     // console.log(formData)
     // console.log(formData.get(img))
-     axios.post('http://localhost:3000/api/Addition/addrent', //formData
+     axios.post('http://localhost:3000/Addition/addrent', //formData
       {user_email, title, desc, img, price, prefer, selectedCategories
     }, {
       headers:{
