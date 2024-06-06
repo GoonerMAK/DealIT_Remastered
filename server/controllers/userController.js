@@ -50,9 +50,9 @@ const verifymail = async (req, res) => {
   jwt.verify(token, process.env.MAILSECRET, function(err, decoded){
     if(err){
       console.log(err)
-      res.send("Email varification failed")
+      res.send("Email verification failed")
     }else{
-      res.send("Email is varified")
+      res.send("Email is verified")
       check=true
     }
   })

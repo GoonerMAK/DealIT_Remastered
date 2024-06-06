@@ -175,7 +175,7 @@ router.post("/rentreq/sender/:id", async(req, res)=>{
       await rentrequest.findByIdAndDelete(id)
       res.status(200).json(Rented)
     }else{
-      throw Error('Owner has not varified yet')
+      throw Error('Owner has not verified yet')
     }
     
   }catch (err){
@@ -194,7 +194,7 @@ router.post("rentreq/sender/reject/:id", async(req, res)=>{
       await rentrequest.findByIdAndDelete(id)
       res.status(200).json("deleted")
     }else{
-      throw Error('Owner has not varified yet')
+      throw Error('Owner has not verified yet')
     }
     
   }catch (err){
@@ -285,7 +285,7 @@ router.post("/exchangereq/sender/:id", async(req, res)=>{
       await exchangerequest.deleteMany({objectid:objectid})
       res.status(200).json("OK")
     }else{
-      throw Error('Owner has not varified yet')
+      throw Error('Owner has not verified yet')
     }
     
   }catch (err){
@@ -303,7 +303,7 @@ router.post("exchangereq/sender/reject/:id", async(req, res)=>{
       await exchangerequest.findByIdAndDelete(id)
       res.status(200).json("deleted")
     }else{
-      throw Error('Owner has not varified yet')
+      throw Error('Owner has not verified yet')
     }
     
   }catch (err){
