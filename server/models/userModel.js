@@ -29,7 +29,7 @@ const userSchema = new Schema({
   },
   verfied:{
     type: Boolean,
-    default: true
+    default: false
   }
 })
 
@@ -81,10 +81,10 @@ userSchema.statics.login = async function(email, password) {
   if (!match) {
     throw Error('Incorrect password')
   }
-  // if(!user.verfied){
-  //   await mailsender(email)
-  //   throw Error('Your Email ID is not verified. An verfication mail has sent to your email')
-  // }
+  if(!user.verfied){
+    await mailsender(email)
+    throw Error('Your Email ID is not verified. An verfication mail has sent to your email')
+  }
 
   return user
 }
