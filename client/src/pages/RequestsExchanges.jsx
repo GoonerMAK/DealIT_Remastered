@@ -84,7 +84,7 @@ const RequestsExchanges=()=>{
         <RequestsRents  key={request._id} request={request} />
       ))}
       
-        </>:<Label>no requesting products</Label>}
+        </>:<Label>No requesting products</Label>}
         </>
       )
     

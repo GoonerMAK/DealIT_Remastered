@@ -15,8 +15,8 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 24px;
-  color: #333;
+font-size:38px;
+color:teal;
 `;
 
 const Price = styled.h1`

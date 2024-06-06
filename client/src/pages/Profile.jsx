@@ -90,7 +90,7 @@ const Profile = () => {
     <Announcement />
     <Navbar />
     <ProfileContainer>
-        <Sidebar activePage={"EditProfile"} />
+        <Sidebar />
         <ProfileRight>
           <div className="profileRightTop">
             <ProfileCover>

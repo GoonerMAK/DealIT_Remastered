@@ -13,6 +13,8 @@ const Form = styled.form`
 const Title = styled.h3`
   text-align: center;
   margin-bottom: 20px;
+  font-size:38px;
+  color:teal;
 `;
 
 const Label = styled.label`

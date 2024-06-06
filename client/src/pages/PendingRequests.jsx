@@ -25,6 +25,8 @@ const PendingRequestsContainer = styled.div`
 
 const Title = styled.h1`
   text-align: center;
+  font-size:38px;
+  color:teal;
 `;
 
 

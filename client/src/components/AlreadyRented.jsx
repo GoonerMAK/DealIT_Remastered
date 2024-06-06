@@ -15,10 +15,10 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 34px;
-  color: #333;
   margin-bottom: 10px;
   text-align: center;
+font-size:38px;
+color:teal;
 `;
 
 const RequestContainer = styled.div`

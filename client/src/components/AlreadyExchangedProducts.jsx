@@ -3,7 +3,7 @@ import Select from "react-select";
 import styled from "styled-components";
 import axios from "axios";
 import { useAuthContext } from '../hooks/useAuthContext'
-import { useLocation , Link} from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import Contractforexc from "./Contractforexc";
 import { current } from "@reduxjs/toolkit";
 import ConfirmationDialog from "./ConfirmationDialog";
@@ -14,10 +14,10 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 34px;
-  color: #333;
   margin-bottom: 10px;
   text-align: center;
+font-size:38px;
+color:teal;
 `;
 
 const RequestContainer = styled.div`
@@ -153,129 +153,127 @@ const ContractButton = styled.button`
   }
 `;
 
-const AlreadyExchangedProducts = ({product}) => {
-   
-    const [selected, setselected]=useState(false)
-    const [Uproduct, setUproduct]=useState('')
-    const [isowner, setisowner] = useState(false)
-    const [issender, setissender] = useState(false)
-    const [owner, setowner] = useState('')
-    const [sender, setsender] = useState('')
+const AlreadyExchangedProducts = ({ product }) => {
+
+  const [selected, setselected] = useState(false)
+  const [Uproduct, setUproduct] = useState('')
+  const [isowner, setisowner] = useState(false)
+  const [issender, setissender] = useState(false)
+  const [owner, setowner] = useState('')
+  const [sender, setsender] = useState('')
 
 
-    const [show, setshow] = useState(false)
-    
-    const upperuser = JSON.parse(localStorage.getItem('user'))
-    const user=upperuser.user
-    
-    const handleclick = (e)=>{
-      setselected(current => !current)
-    }
+  const [show, setshow] = useState(false)
 
-    useEffect(() => {
-      const getProducts = async () => {
+  const upperuser = JSON.parse(localStorage.getItem('user'))
+  const user = upperuser.user
+
+  const handleclick = (e) => {
+    setselected(current => !current)
+  }
+
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const res = await axios.get(
+          'http://localhost:3000/api/products/find/' + product.objectid
+        );
+        // console.log(res);
+        setUproduct(res.data);
+
+      } catch (err) { }
+    };
+    getProducts();
+  }, [product.objectid]);
+
+  useEffect(() => {
+    const getuser = async () => {
+      if (user._id === product.owner_id) {
         try {
-          const res = await axios.get(
-            'http://localhost:3000/api/products/find/'+ product.objectid
-          );
-          // console.log(res);
-          setUproduct(res.data);
-          
-        } catch (err) {}
-      };
-      getProducts();
-    }, [product.objectid]);
-
-    useEffect(() => {
-      const getuser = async () => {
-        if(user._id===product.owner_id){
-        try{
-          const res = await axios.get('http://localhost:3000/api/user/find/'+product.sender_id)
+          const res = await axios.get('http://localhost:3000/api/user/find/' + product.sender_id)
           setsender(res.data)
           setisowner(true)
-          console.log("User",res.data)
-        }catch(error)
-        {
+          console.log("User", res.data)
+        } catch (error) {
           console.log(error)
         }
-      }else if(user._id===product.sender_id){
-          try{
-              const res = await axios.get('http://localhost:3000/api/user/find/'+product.owner_id)
-              setowner(res.data)
-              setissender(true)
-              console.log("user",res.data)
-            }catch(error)
-            {
-              console.log(error)
-            } 
+      } else if (user._id === product.sender_id) {
+        try {
+          const res = await axios.get('http://localhost:3000/api/user/find/' + product.owner_id)
+          setowner(res.data)
+          setissender(true)
+          console.log("user", res.data)
+        } catch (error) {
+          console.log(error)
+        }
       }
     };
     getuser();
-    },[user._id]);
-  
+  }, [user._id]);
 
 
-    return (
-        <>
-         <Wrapper>
-          <RequestContainer>
-             <Title>Exchanged Product</Title>
 
-              <Info>
-                <Product>
+  return (
+    <>
+      <Wrapper>
+        <RequestContainer>
+          <Title>Exchanged Product</Title>
 
-                  <ProductDetail>
-                   <Image src={product.img} />
-                   
-                   <Details>
-                   <Label> <strong>Product: </strong> {product.title}</Label>
-                   {/* <Label> <strong>Request: </strong> {Uproduct.title}</Label> */}
-                   {user._id === product.owner_id ? (
-                      <Label>Send to: {sender.username}</Label>
-                    ) : (
-                      <Label>Send to: {owner.username}</Label>
-                    )}
-                   <Label> <strong>Description: </strong> {product.desc}</Label>
-                   <Label> <strong>Return Date: </strong> {product.return_date} </Label>
-                   </Details>
+          <Info>
+            <Product>
 
-                  </ProductDetail>
+              <ProductDetail>
+                <Image src={product.img} />
 
-                  </Product>
+                <Details>
+                  <Label> <strong>Product: </strong> {product.title}</Label>
+                  {/* <Label> <strong>Request: </strong> {Uproduct.title}</Label> */}
+                  {user._id === product.owner_id ? (
+                    <Label>Send to: {sender.username}</Label>
+                  ) : (
+                    <Label>Send to: {owner.username}</Label>
+                  )}
+                  <Label> <strong>Description: </strong> {product.desc}</Label>
+                  <Label> <strong>Return Date: </strong> {product.return_date} </Label>
+                </Details>
 
+              </ProductDetail>
 
-                   <Product>
-
-                    <ProductDetail>
-
-                   <MessageButton> {user._id === product.owner_id ? (
-                      <Link to={`/messege?data=${product.sender_id}`}>
-                        Message
-                      </Link>
-                    ) : (
-                      <Link to={`/messege?data=${product.owner_id}`}>
-                        Message
-                      </Link>
-                    )} </MessageButton>
-
-                    </ProductDetail>
-
-                   </Product>
-                     
-
-                    <Product>
-                    <ContractButton onClick={handleclick}>Show Contract</ContractButton>
-                     {selected && <Contractforexc text={product.contract} />}
-                   
-                   </Product>
-                
-              </Info>
-         </RequestContainer>
-        </Wrapper>
+            </Product>
 
 
-        </>
-    )
+            <Product>
+
+              <ProductDetail>
+
+                <MessageButton> {user._id === product.owner_id ? (
+                  <Link to={`/messege?data=${product.sender_id}`}>
+                    Message
+                  </Link>
+                ) : (
+                  <Link to={`/messege?data=${product.owner_id}`}>
+                    Message
+                  </Link>
+                )} </MessageButton>
+
+              </ProductDetail>
+
+            </Product>
+
+
+            <Product>
+              <ContractButton onClick={handleclick}>Show Contract</ContractButton>
+              {selected && <Contractforexc text={product.contract} />}
+
+            </Product>
+
+          </Info>
+        </RequestContainer>
+      </Wrapper>
+
+
+    </>
+  )
 }
 
 

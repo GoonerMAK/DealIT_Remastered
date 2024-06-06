@@ -35,10 +35,11 @@ const Info = styled.div`
 `;
 
 const Title = styled.h1`
-    color:teal;
-    margin-bottom: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+font-size:38px;
+color:teal;
 `;
-
 const Button = styled.button`
 padding: 8px 15px;
 border: 2px solid teal;
@@ -67,23 +68,23 @@ const Circle = styled.div`
   opacity: 100%;
 `;
 
-const CategoryItem = ({item}) => {
+const CategoryItem = ({ item }) => {
   return (
     <Container>
-      
+
       <Image src={item.img} />
 
       <Info>
 
-          <Title>{item.title} </Title>
-          <Link to={`/products/${item.cat}`}>
-          
+        <Title>{item.title} </Title>
+        <Link to={`/products/${item.cat}`}>
+
           <Button>GO</Button>
 
-          </Link>
+        </Link>
 
       </Info>
-      
+
     </Container>
   )
 }

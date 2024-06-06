@@ -27,6 +27,8 @@ const MyOrdersContainer = styled.div`
 
 const Title = styled.h1`
   text-align: center;
+font-size:38px;
+color:teal;
 `;
 
 
@@ -61,8 +63,12 @@ const Myproducts = () => {
       <MyOrdersPage>
         <Sidebar />
         <MyOrdersContainer>
-          <Title>The Products</Title>
-          {items.map((item) => (<Product item={item} key={item.id} />))}
+          <Title>My Products</Title>
+          {items.length === 0 ? (
+        <div>No products found</div>
+      ) : (
+        items.map((item) => <Product item={item} key={item.id} />)
+      )}
         </MyOrdersContainer>
       </MyOrdersPage>
 

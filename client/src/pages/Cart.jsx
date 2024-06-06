@@ -19,6 +19,8 @@ const Wrapper = styled.div`
 const Title = styled.h1`
   font-weight: 300;
   text-align: center;
+font-size:38px;
+color:teal;
 `;
 
 const Top = styled.div`
