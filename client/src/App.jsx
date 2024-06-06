@@ -20,6 +20,7 @@ import MyexchangeRentproducts from "./pages/MyExchangeRentproducts";
 import Myproducts from "./pages/Myproducts"
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import SearchResultPage from "./pages/SearchResultPage";
 
 
 
@@ -41,6 +42,9 @@ const App = () => {
         </Route> */}
 
         <Route path="/product/:id" element={<Product/>}>          
+        </Route>
+
+        <Route path="/search" element={<SearchResultPage/>}>          
         </Route>
 
         <Route path="/cart" element={<Cart/>}>

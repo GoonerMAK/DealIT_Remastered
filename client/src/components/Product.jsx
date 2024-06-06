@@ -110,10 +110,10 @@ const Product = ({ item }) => {
       <Description>
         <Paragraph><Title>{item.title}
         </Title></Paragraph>
-          <Paragraph><Price>Tk {item.price}</Price></Paragraph>
+          {item.price && (<Paragraph><Price>Tk {item.price}</Price></Paragraph>)}
           <Paragraph>{item.desc}</Paragraph>
           <Paragraph>{item.category}</Paragraph>
-          <Paragraph><Type><strong>Status: </strong>{item.type}</Type></Paragraph>
+          {/* <Paragraph><Type><strong>Status: </strong>{item.type}</Type></Paragraph> */}
       </Description>
 
 
