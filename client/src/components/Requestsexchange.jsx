@@ -27,12 +27,13 @@ color:teal;
 `;
 
 const RequestContainer = styled.div`
-  margin: 2rem auto;
-  width: 1000px;
-  padding: 2rem;
+margin: 1rem auto;
+// width: 1000px;
+min-width:70vw;
+padding: 1rem;
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  // box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 
   height: 100%;
 `;
@@ -74,6 +75,9 @@ const ProductDetail = styled.div`
   display: flex;
 `;
 
+const Productdate = styled.div`
+margin-left:10px;`
+
 const Image = styled.img`
   width: 200px;
   padding: 5px;
@@ -83,7 +87,7 @@ const Details = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  // justify-content: space-around;
 `;
 
 const Input = styled.input`
@@ -97,35 +101,35 @@ const Input = styled.input`
 `;
 
 const MessageButton = styled.button`
-padding: 8px;
-border: 3px solid teal;
-background-color: white;
-cursor: pointer;
-font-weight: 700;
-font-size: 15px;
-width: 10%;
+padding: 10px 20px;
+  background-color: teal;
+  border:1px solid teal;
+  color: white;
+  border: none;
+  border-radius:25px;
+  cursor: pointer;
+  font-size: 15px;
+  margin-top:10px;
+  transition: all 500ms ease;
+  &:hover {
+    background-color: rgb(1, 163, 163);
 
-margin-left: 290px;
-
-&:hover{
-    background-color: #f8f4f9;
-}
+  }
 `;
 
 const VerifyButton = styled.button`
-padding: 8px;
-border: 3px solid teal;
-background-color: white;
-cursor: pointer;
-font-weight: 700;
-font-size: 15px;
-width: 10%;
-
-margin-left: 50px;
-
-&:hover{
-    background-color: #f8f4f9;
-}
+padding: 10px 20px;
+  background-color: teal;
+  color: #fff;
+  border: none;
+  border-radius:25px;
+  cursor: pointer;
+  font-size: 15px;
+  margin-top:10px;
+  margin-bottom:10px;
+  &:hover {
+    background-color: rgb(1, 163, 163);
+  }
 `;
 
 const Requestsexchange = ({ request }) => {
@@ -136,7 +140,8 @@ const Requestsexchange = ({ request }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [updated, setupdated] = useState(false)
   const [show, setshow] = useState(false)
-
+  const [owner, setowner] = useState('')
+  const [sender, setsender] = useState('')
 
   const handleclick = (e) => {
     setselected(current => !current)
@@ -145,6 +150,32 @@ const Requestsexchange = ({ request }) => {
   const handleaccept = () => {
     setShowConfirmation(true);
   }
+
+  useEffect(() => {
+    const getsender = async () => {
+      try {
+        const res = await axios.get('http://localhost:3000/api/user/find/' + request.sender_id)
+        setsender(res.data)
+        console.log(res.data)
+      } catch (error) {
+        console.log(error)
+      }
+    };
+    getsender();
+  }, [request.sender_id]);
+
+  useEffect(() => {
+    const getowner = async () => {
+      try {
+        const res = await axios.get('http://localhost:3000/api/user/find/' + request.owner_id)
+        setowner(res.data)
+        console.log(res.data)
+      } catch (error) {
+        console.log(error)
+      }
+    };
+    getowner();
+  }, [request.owner_id]);
 
   const handleConfirm = async (e) => {
     e.preventDefault()
@@ -210,7 +241,41 @@ const Requestsexchange = ({ request }) => {
     getRequests();
   }, [request.owner_id, request.owner_verify]);
 
-  const text = `this is a contract for` //${product.title} `
+  const text = `Exchange Contract
+
+  This document serves as a legal agreement between the parties involved in the exchange transaction. The details outlined below must be adhered to by both parties:
+  
+  Item To Be Exchanged:
+  - Item: ${product.title}
+  Item Offered By Sender:
+  - Item: ${request.title}
+  - Description: ${request.desc}
+  Details
+  - Owner Name: ${owner.username}
+  - Sender Name: ${sender.username}
+  
+  Terms and Conditions:
+  1. Exchange Agreement: The parties agree to exchange the above item(s) under the terms specified in this contract.
+  2. Verification: Both parties have verified.
+  3. Return Date: The item(s) must be returned by ${new Date(request.returndate).toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  })}.
+  4. Condition of Item: The item was handed over in good condition and should be returned in the same condition at the agreed-upon return date.
+  5. Responsibilities:
+     - The owner is responsible for ensuring the item(s) are in good working condition before the exchange.
+     - The sender is responsible for verifying the item(s) upon receipt and returning them on time.
+  6. Dispute Resolution: Any disputes arising from this agreement shall be resolved through mediation or arbitration.`
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
 
 
   return (
@@ -218,7 +283,7 @@ const Requestsexchange = ({ request }) => {
 
       <Wrapper>
         <RequestContainer>
-          <Title>Pending Exchange Requests</Title>
+          {/* <Title>Pending Exchange Requests</Title> */}
 
           <Info>
             <Product>
@@ -227,36 +292,41 @@ const Requestsexchange = ({ request }) => {
                 <Image src={request.img} />
 
                 <Details>
+                  <Label>
+                    <strong>Product: </strong>
+                    <Link to={`/product/${product._id}`}>{product.title}</Link>
+                  </Label>
                   {/* <Label> <strong>Product: </strong> {product.title}</Label> */}
                   <Label> <strong>Request: </strong> {request.title}</Label>
                   <Label> <strong>Description: </strong> {request.desc}</Label>
-                  <Label> <strong>Return Date: </strong> {returndate}</Label>
+                  <Label> <strong>Return Date: </strong> {new Date(returndate).toLocaleDateString('en-US', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                  })}</Label>
                 </Details>
 
               </ProductDetail>
+              <div><Link to={`/messege?data=${request.sender_id}`}><MessageButton> Message</MessageButton></Link>
 
+              </div>
             </Product>
-
-            <Product>
-
+            <Productdate>
               {!updated && (
                 <Input
                   type="date"
                   onChange={(e) => setreturndate(e.target.value)}
-                  value={returndate}
+                  value={formatDate(returndate)}
                 />
               )}
-
-            </Product>
+            </Productdate>
 
 
             <Product>
 
               <ProductDetail>
 
-                <MessageButton> <Link to={`/messege?data=${request.sender_id}`}>Message</Link> </MessageButton>
-
-                {show || request.owner_verify || updated ? (
+                {request.owner_verify || updated ? (
                   <VerificationLabel>This Product is Already Verified</VerificationLabel>
                 ) : (
                   <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
@@ -276,12 +346,12 @@ const Requestsexchange = ({ request }) => {
                   onCancel={handleCancel}
                 />
               )}
-              {(request.owner_verify || updated) && (
-                <VerifyButton onClick={handleclick}>Show Contract</VerifyButton>
-              )}
-              {selected && <Contractforexc text={text} />}
-            </Product>
 
+            </Product>
+            {(request.owner_verify || updated) && (
+              <VerifyButton onClick={handleclick}>Show Contract</VerifyButton>
+            )}
+            {selected && <Contractforexc text={text} />}
           </Info>
         </RequestContainer>
       </Wrapper>
