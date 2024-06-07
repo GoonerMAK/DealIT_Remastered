@@ -12,6 +12,7 @@ import React from 'react'
 
 const Wrapper = styled.div`
   padding: 10px;
+
 `;
 
 const ContractButton = styled.button`
@@ -34,7 +35,7 @@ transition: all 500ms ease;
 `;
 
 const Title = styled.h1`
-font-size:38px;
+font-size:20px;
 color:teal;
 `;
 
@@ -119,6 +120,18 @@ const Image = styled.img`
 const MessageLink = styled(Link)`
   text-decoration: none;
   color: blue;
+`;
+
+const RequestContainer = styled.div`
+margin: 1rem auto;
+// width: 1000px;
+max-width:70vw;
+padding: 1rem;
+  background-color: white;
+  border-radius: 5px;
+  // box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
+  height: 100%;
 `;
 
 const VerifyButton = styled.button`
@@ -317,7 +330,7 @@ const   Pendingexchange = ({ request }) => {
 
       <Wrapper>
 
-
+<RequestContainer>
         <Info>
           <Product>
 
@@ -326,10 +339,12 @@ const   Pendingexchange = ({ request }) => {
 
               <Details>
                 {/* <Label> <strong>Product: </strong> {product.title}</Label> */}
-                <Label>
-                  <strong>Product: </strong>
-                  <Link to={`/product/${product._id}`}>{product.title}</Link>
-                </Label>
+                <Link to={`/product/${product._id}`} style={{
+                  textDecoration: "none",
+                  ":hover": {
+                    textDecoration: "underline",
+                  }
+                }}><Title>{product.title}</Title></Link>
 
                 <Label> <strong>Exchange Item: </strong> {request.title}</Label>
                 <Label> <strong>Description: </strong> {request.desc}</Label>
@@ -348,18 +363,8 @@ const   Pendingexchange = ({ request }) => {
 
 
 
-        {!updated && !request.sender_verify && !request.owner_verify && (
-          <>
-            {(!request.sender_verify && request.owner_verify)  ? (
-              <>
-                <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
-                <RejectButton onClick={handlereject}>Reject</RejectButton>
-              </>
-            ) : (
-              <>
-              </>
-            )}
-            {request.owner_verify ? (
+        {!updated && (
+          <>{request.owner_verify ? (
               <>
                 <label>This product has been verified by the owner.</label>
               </>
@@ -368,6 +373,16 @@ const   Pendingexchange = ({ request }) => {
                 <label>Owner hasn't verified this product yet. </label>
               </>
             )}
+            {(!request.sender_verify && request.owner_verify)  ? (
+              <div>
+                <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
+                <RejectButton onClick={handlereject}>Reject</RejectButton>
+              </div>
+            ) : (
+              <>
+              </>
+            )}
+            
           </>
         )}
 
@@ -395,6 +410,7 @@ const   Pendingexchange = ({ request }) => {
         )}
 
         {selected && <Contractforexc text={text} />}
+      </RequestContainer>
       </Wrapper>
 
     </>

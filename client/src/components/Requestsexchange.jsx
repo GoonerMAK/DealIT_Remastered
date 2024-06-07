@@ -20,16 +20,15 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h1`
-font-size:38px;
+font-size:20px;
 color:teal;
   margin-bottom: 10px;
-  text-align: center;
 `;
 
 const RequestContainer = styled.div`
 margin: 1rem auto;
 // width: 1000px;
-min-width:70vw;
+max-width:70vw;
 padding: 1rem;
   background-color: white;
   border-radius: 5px;
@@ -292,10 +291,12 @@ const Requestsexchange = ({ request }) => {
                 <Image src={request.img} />
 
                 <Details>
-                  <Label>
-                    <strong>Product: </strong>
-                    <Link to={`/product/${product._id}`}>{product.title}</Link>
-                  </Label>
+                <Link to={`/product/${product._id}`} style={{
+                  textDecoration: "none",
+                  ":hover": {
+                    textDecoration: "underline",
+                  }
+                }}><Title>{product.title}</Title></Link>
                   {/* <Label> <strong>Product: </strong> {product.title}</Label> */}
                   <Label> <strong>Request: </strong> {request.title}</Label>
                   <Label> <strong>Description: </strong> {request.desc}</Label>
@@ -322,7 +323,7 @@ const Requestsexchange = ({ request }) => {
             </Productdate>
 
 
-            {!updated && !request.sender_verify && !request.owner_verify && (
+            {!updated && (
               <>
                 {request.sender_verify ? (
                   <>
@@ -338,9 +339,9 @@ const Requestsexchange = ({ request }) => {
                     <label>You have already processed it. </label>
                   </>
                 ) : (
-                  <>
+                  <div>
                     <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
-                  </>
+                  </div>
                 )}
               </>
             )}

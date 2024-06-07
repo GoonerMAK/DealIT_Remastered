@@ -16,15 +16,14 @@ const Wrapper = styled.div`
 
 const Title = styled.h1`
   margin-bottom: 10px;
-  text-align: center;
-font-size:38px;
+font-size:20px;
 color:teal;
 `;
 
 const RequestContainer = styled.div`
-margin: 1rem auto;
+margin: 1rem 0;
 // width: 1000px;
-min-width:70vw;
+max-width:70vw;
 padding: 1rem;
   background-color: white;
   border-radius: 5px;
@@ -100,6 +99,7 @@ padding: 10px 20px;
   border:1px solid teal;
   color: white;
   border: none;
+  justify-content: flex-end;
   border-radius:25px;
   cursor: pointer;
   font-size: 15px;
@@ -252,7 +252,12 @@ const AlreadyRented = ({ product }) => {
                 <Image src={productData.img} />
 
                 <Details>
-                  <h3><Link to={`/product/${productData._id}`} >{productData.title}</Link></h3>
+                <Link to={`/product/${productData._id}`} style={{
+                  textDecoration: "none",
+                  ":hover": {
+                    textDecoration: "underline",
+                  }
+                }}><Title>{productData.title}</Title></Link>
                   {isowner && <Label><strong>Rented to:</strong> {sender.username}</Label>}
                   {issender && <Label><strong>Rented from:</strong> {owner.username}</Label>}
                   <Label><strong>Rented For:</strong> {product.renttype}</Label>

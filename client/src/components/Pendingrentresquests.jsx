@@ -34,7 +34,7 @@ transition: all 500ms ease;
 `;
 
 const Title = styled.h1`
-font-size:38px;
+font-size:20px;
 color:teal;
 `;
 
@@ -153,6 +153,18 @@ margin-top:10px;
 
 const Image = styled.img`
   width: 200px;
+`;
+
+const RequestContainer = styled.div`
+margin: 1rem auto;
+// width: 1000px;
+max-width:70vw;
+padding: 1rem;
+  background-color: white;
+  border-radius: 5px;
+  // box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
+  height: 100%;
 `;
 
 
@@ -293,35 +305,39 @@ const Pendingrentrequests = ({ request }) => {
   return (
     <>
       <Wrapper>
-        <Info>
-          <Product>
+        <RequestContainer>
+          <Info>
+            <Product>
 
-            <ProductDetail>
-            <Image src={product?.img} />
-              <Details>
-              <Link to={`/product/${product._id}`}><Label>{product.title}</Label></Link>
-                <Label> <strong>Price: </strong> {request.proposed_price}</Label>
-                <Label> <strong>Type: </strong> {request.renttype}</Label>
-                {/* <Title>{request.title}</Title> */}
-              </Details>
-            </ProductDetail>
+              <ProductDetail>
+                <Image src={product?.img} />
+                <Details>
+                  <Link to={`/product/${product._id}`} style={{
+                    textDecoration: "none",
+                    ":hover": {
+                      textDecoration: "underline",
+                    }
+                  }}><Title>{product.title}</Title></Link>
+                  <Label> <strong>Price: </strong> {request.proposed_price}</Label>
+                  <Label> <strong>Type: </strong> {request.renttype}</Label>
+                  {/* <Title>{request.title}</Title> */}
+                </Details>
+              </ProductDetail>
 
-            <div><Link to={`/messege?data=${request.owner_id}`}><MessageButton> Message</MessageButton></Link></div>
-          </Product>
+              <div><Link to={`/messege?data=${request.owner_id}`}><MessageButton> Message</MessageButton></Link></div>
+            </Product>
           </Info>
 
           {(!updated && (!request.sender_verify || !request.owner_verify)) ? (
             <>
               {request.owner_verify ? (
-                <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
-              ) : (
+                <>
+                  <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
+                  <RejectButton onClick={handlereject}>Reject</RejectButton>
+                </>) : (
                 <label>Owner hasn't verified this product yet.</label>
               )}
-              {request.owner_verify ? (
-                <RejectButton onClick={handlereject}>Reject</RejectButton>
-              ) : (
-                <label>Owner hasn't verified this product yet.</label>
-              )}
+
             </>
           ) : (
             <label>Request has been processed.</label>
@@ -341,9 +357,10 @@ const Pendingrentrequests = ({ request }) => {
             />
           )}
           {(request.sender_verify || updated) && (
-            <ContractButton onClick={handleclick}>{selected? "Hide Contract": "Show Contract"}</ContractButton>
+            <ContractButton onClick={handleclick}>{selected ? "Hide Contract" : "Show Contract"}</ContractButton>
           )}
           {selected && <Contractforexc text={text} />}
+        </RequestContainer>
       </Wrapper>
     </>
   )

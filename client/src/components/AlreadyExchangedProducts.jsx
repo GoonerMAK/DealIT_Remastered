@@ -10,23 +10,19 @@ import ConfirmationDialog from "./ConfirmationDialog";
 
 const Wrapper = styled.div`
   padding: 10px;
-  display: flex;
+  // display: flex;
 `;
 
 const Title = styled.h1`
   margin-bottom: 10px;
-  text-align: center;
-font-size:38px;
-color:teal;
-font-size:38px;
-color:teal;
+font-size:20px;
 `;
 
 const RequestContainer = styled.div`
-  margin: 1rem auto;
-  // width: 1000px;
-min-width:70vw;
-padding: 2rem;
+margin: 1rem auto;
+// width: 1000px;
+max-width:70vw;
+padding: 1rem;
   background-color: white;
   border-radius: 5px;
   // box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -38,12 +34,6 @@ const Info = styled.div`
   flex: 3;
   margin-left: 20px;
   margin-right: 20px;
-
-  &:hover {
-    background-color: lightgray;
-  }
-
-  cursor: pointer;
 `;
 
 const Label = styled.label`
@@ -72,7 +62,7 @@ const ProductDetail = styled.div`
 `;
 
 const Image = styled.img`
-  width: 200px;
+  max-width: 200px;
   padding: 5px;
 `;
 
@@ -170,7 +160,21 @@ const AlreadyExchangedProducts = ({ product }) => {
   const [isowner, setisowner] = useState(false)
   const [issender, setissender] = useState(false)
   const [owner, setowner] = useState('')
+  const [productData, setProductData] = useState('')
   const [sender, setsender] = useState('')
+
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const res = await axios.get(
+          'http://localhost:3000/api/products/find/' + product.objectid
+        );
+        // console.log(res);
+        setProductData(res.data);
+      } catch (err) { }
+    };
+    getProducts();
+  }, [Uproduct.objectid]);
 
 
   const [show, setshow] = useState(false)
@@ -241,16 +245,23 @@ const AlreadyExchangedProducts = ({ product }) => {
             <Product>
 
               <ProductDetail>
-                <Image src={product.img} />
+                <Image src={productData.img} />
 
                 <Details>
-                  <Label> <strong>Product: </strong> {product.title}</Label>
+                  <Link to={`/product/${productData._id}`} style={{
+                    textDecoration: "none",
+                    color:"teal",
+                    ":hover": {
+                      textDecoration: "underline",
+                    }
+                  }}><Title>{productData.title}</Title></Link>
                   {/* <Label> <strong>Request: </strong> {Uproduct.title}</Label> */}
                   {user._id === product.owner_id ? (
-                    <Label>Send to: {sender.username}</Label>
+                    <Label><strong>Exchanged with: </strong>{sender.username}</Label>
                   ) : (
-                    <Label>Send to: {owner.username}</Label>
+                    <Label><strong>Exchanged with: </strong>{owner.username}</Label>
                   )}
+                  <Label> <strong>Exchange Item: </strong> {product.title}</Label>
                   <Label> <strong>Description: </strong> {product.desc}</Label>
                   <Label> <strong>Return Date: </strong> {formatDate(product.return_date)} </Label>
                 </Details>
@@ -269,7 +280,7 @@ const AlreadyExchangedProducts = ({ product }) => {
 
             </Product>
 
-            <ContractButton onClick={handleclick}>{selected? "Hide Contract": "Show Contract"}</ContractButton>
+            <ContractButton onClick={handleclick}>{selected ? "Hide Contract" : "Show Contract"}</ContractButton>
             {selected && <Contractforexc text={product.contract} />}
 
           </Info>

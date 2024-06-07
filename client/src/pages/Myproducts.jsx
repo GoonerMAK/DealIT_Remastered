@@ -37,18 +37,18 @@ const Myproducts = () => {
 
   const [items, setitems] = useState([])
   const upperuser = JSON.parse(localStorage.getItem('user'))
-    const user=upperuser.user
+  const user = upperuser.user
 
   useEffect(() => {
     const getProducts = async () => {
       try {
         const res = await axios.get(
-          'http://localhost:3000/api/products/find/user/'+user._id
+          'http://localhost:3000/api/products/find/user/' + user._id
         );
         // console.log(res);
         setitems(res.data);
 
-      } catch (err) {}
+      } catch (err) { }
     };
     getProducts();
   }, [user._id]);
@@ -57,7 +57,7 @@ const Myproducts = () => {
 
   return (
 
-<>
+    <>
       <Announcement />
       <Navbar />
 
@@ -66,10 +66,10 @@ const Myproducts = () => {
         <MyOrdersContainer>
           <Title>My Products</Title>
           {items.length === 0 ? (
-        <div>No products found</div>
-      ) : (
-        items.map((item) => <Product item={item} key={item.id} />)
-      )}
+            <div>No products found</div>
+          ) : (
+            items.map((item) => <Product item={item} key={item.id} />)
+          )}
         </MyOrdersContainer>
       </MyOrdersPage>
 

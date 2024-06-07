@@ -276,7 +276,7 @@ const RequestsRents = ({ request }) => {
                 }}><Title>{product.title}</Title></Link>
                 <Label>Preferred rent type: {renttype}</Label>
                 <Label>Change rent type?</Label>
-                {!updated && (
+                {!request.owner_verify && !updated && (
                   <SelectInput value={renttype} onChange={(e) => setrenttype(e.target.value)}>
                     <option value="choose">Choose</option>
                     <option value="weekly">Weekly</option>
@@ -285,28 +285,40 @@ const RequestsRents = ({ request }) => {
                   </SelectInput>
                 )}
                 <Label>Preferred price: {price}</Label>
-                <Label>Change price?</Label>
-                <PriceInput
-                  type="number"
-                  onChange={(e) => setprice(e.target.value)}
-                  value={price}
-                />
-                {updated ? (
+                {!request.owner_verify && (<>
+                  <Label>Change price?</Label>
+                  <PriceInput
+                    type="number"
+                    onChange={(e) => setprice(e.target.value)}
+                    value={price}
+                  />
+                </>)}
+                {!updated && !request.owner_verify ? (
                   <>
-                    {request.owner_verify ? (
-                      <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
-                    ) : (
-                      <label>Owner hasn't verified this product yet.</label>
-                    )}
-
+                    <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
                   </>
                 ) : (
-                  <label>You have already processed this</label>
+                  <label>You have processed this request. </label>
+                )}
+
+                {!updated && !request.sender_verify ? (
+                  <>
+                    <label>Awaiting verification from sender. </label>
+                  </>
+                ) : (
+                  <label>Sender has verified the request. </label>
                 )}
               </Details>
             </ProductDetail>
             <div><Link to={`/messege?data=${request.owner_id}`}><MessageButton>Message</MessageButton></Link></div>
           </Product>
+
+          {(request.owner_verify) && (
+            <ContractViewer>
+              <ContractButton onClick={handleclick}>{selected ? "Hide Contract" : "Show Contract"}</ContractButton>
+            </ContractViewer>
+          )}
+          <ContractViewer>{selected && <Contractforexc text={text} />}</ContractViewer>
         </Info>
 
         {showConfirmation && (
@@ -317,12 +329,7 @@ const RequestsRents = ({ request }) => {
           />
         )}
 
-        {(request.owner_verify || updated) && (
-          <ContractViewer>
-            <ContractButton onClick={handleclick}>{selected? "Hide Contract": "Show Contract"}</ContractButton>
-          </ContractViewer>
-        )}
-        <ContractViewer>{selected && <Contractforexc text={text} />}</ContractViewer>
+
       </Wrapper>
     </>
   )

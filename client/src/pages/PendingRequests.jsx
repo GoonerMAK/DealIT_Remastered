@@ -15,7 +15,7 @@ const PendingRequestsContainer = styled.div`
 margin: 1rem auto;
 // width: 1000px;
 min-width:70vw;
-  padding: 2rem;
+  padding: 1rem;
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
