@@ -7,7 +7,7 @@ const Exchangerequest = require("../models/exchange_request");
 const addsellProduct = async (req, res) => {
   const { user_email, title, desc, img, price, selectedCategories } = req.body; //, categories
   const categories = selectedCategories;
-  console.log(categories);
+  console.log(req.body);
   //let emptyFields = []
 
   if (!title || !desc || !img || !price || !categories) {
@@ -88,7 +88,7 @@ const addexchangeProduct = async (req, res) => {
 const addrentProduct = async (req, res) => {
   const { user_email, title, desc, img, price, prefer, selectedCategories } = req.body; //, categories
   const categories = selectedCategories;
-  console.log(categories);
+  console.log(req.body);
   //let emptyFields = []
 
   if (!title || !desc || !img || !price || !prefer || !categories) {

@@ -129,28 +129,28 @@ const customStyles = {
   }),
 };
 
-const Addsell= ()=>{
-    const { user } = useAuthContext()
-    const [title, setTitle] = useState('')
-    const [desc, setdesc] = useState('')
-    const [img, setimg] = useState('')
-    const[price, setprice]= useState('')
-    const [imgfile, setimgfile]=useState('')
-    const [categories, setcategories]=useState()
-    const [error, setError] = useState(null)
-    const [selectedCategories, setSelectedCategories] = useState([]);
-    const [message, setMessage] = useState('')
+const Addsell = () => {
+  const { user } = useAuthContext()
+  const [title, setTitle] = useState('')
+  const [desc, setdesc] = useState('')
+  const [img, setimg] = useState('')
+  const [price, setprice] = useState('')
+  const [imgfile, setimgfile] = useState('')
+  const [categories, setcategories] = useState()
+  const [error, setError] = useState(null)
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [message, setMessage] = useState('')
 
 
-    const optionList=[{value:"Electronics", label:"Electronics"},
-  {value:"Pc Components", label:"Pc Components"},
-  {value:"Sports", label:"Sports"},
-  {value:"Home & Living", label:"Home & Living"},
-  {value:"Gadgets", label:"Gadgets"},
-  {value:"Laptop", label:"Laptop"},
-  {value:"Phone", label:"Phone"},
-  {value:"Education", label:"Education"},
-  {value:"Others", label:"Others"}
+  const optionList = [{ value: "Electronics", label: "Electronics" },
+  { value: "Pc Components", label: "Pc Components" },
+  { value: "Sports", label: "Sports" },
+  { value: "Home & Living", label: "Home & Living" },
+  { value: "Gadgets", label: "Gadgets" },
+  { value: "Laptop", label: "Laptop" },
+  { value: "Phone", label: "Phone" },
+  { value: "Education", label: "Education" },
+  { value: "Others", label: "Others" }
   ]
 
 
@@ -159,125 +159,144 @@ const Addsell= ()=>{
     setSelectedCategories(selectedValues);
   };
 
-    const handleimage= (e)=>{
-      e.preventDefault()
-      // const formData = new FormData()
+  const handleimage = (e) => {
+    e.preventDefault()
+    // const formData = new FormData()
 
-      var fileObject = e.target.files[0];
-      setimgfile(fileObject);
+    var fileObject = e.target.files[0];
+    setimgfile(fileObject);
+  }
+  const handleimagesave = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("file", imgfile);
+      formData.append("upload_preset", "Product_image");
+  
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dcpremwwm/image/upload",
+        formData
+      );
+  
+      console.log("Image upload response:", response);
+      
+      if (response.status === 200) {
+        setimg(response.data.secure_url);
+        return response.data.secure_url;
+      } else {
+        setMessage("Image upload failed");
+        return "";
+      }
+    } catch (error) {
+      setMessage("Error uploading image");
+      return "";
     }
-    const handleimagesave=()=>{
-      const formData = new FormData()
-        formData.append("file", imgfile)
-        formData.append("upload_preset", "Product_image")
+  };
+  
 
-        axios.post(
-          "https://api.cloudinary.com/v1_1/dcpremwwm/image/upload",formData)
-          .then((response) => {
-            console.log(response);
-            setimg(response.data.secure_url);
-            }).catch((error) => {
-              console.log(error);
-          })
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     setMessage('Please wait')
-    console.log(img)
-      //const formData = new FormData()
-      const user_email= user.user._id
-      handleimagesave()
-      
-      
+    try {
+      const imgUrl = await handleimagesave();
+      if (!imgUrl || imgUrl ==="") {
+        setMessage("Image upload failed. Please try again.");
+        return;
+      }
+      const user_email = user.user._id
 
-      // console.log(formData)
-      // console.log(formData.get(img))
-       axios.post('http://localhost:3000/Addition/addsell', //formData
-        {user_email, title, desc, img, price, selectedCategories
-      }, {
-        headers:{
+      const response = await axios.post('http://localhost:3000/api/Addition/addsell', //formData
+        {
+          user_email, title, desc, img:imgUrl, price, selectedCategories
+        }, {
+        headers: {
           'Content-Type': 'application/json' //, 'Authorization': `Bearer ${user.token}`  'multipart/form-data'  
         }
-      }
-      ).then((response)=>{
-        console.log(response)
+      })
+      console.log(response);
+      if (response.statusText === 'OK') {
+        setMessage('Product added successfully!');
+        // Clear the form fields
         setTitle('')
         setdesc('')
         setimg('')
         setError(null)
-        setcategories('')
+        // setcategories('')
         setprice('')
         setimgfile('')
-      if (response.statusText === 'OK') { setMessage('Product added successfully!') }
-    }).catch((error)=>{
+        setSelectedCategories([]);
+      }
+    } catch (error) {
       if (error.response) {
         console.log(error.response);
-        setMessage("server responded");
+        setMessage("Server responded with an error.");
       } else if (error.request) {
-        setMessage("network error");
+        setMessage("Network error.");
       } else {
         console.log(error);
+        setMessage("An error occurred.");
       }
-      })
     }
+  }
 
-    return (
-      <Container>
-        <form className="create" onSubmit={handleSubmit}>
-          <Title><h3>Add a New Product For Sell</h3></Title>
-    
-          <Label>Product Title</Label>
-          <Input 
-            type="text"
-            onChange={(e) => setTitle(e.target.value)}
-            value={title}
-            // className={emptyFields.includes('title') ? 'error' : ''}
-          />
-          
-          <Label>Price</Label>
-          <Input 
-            type="number"
-            onChange={(e) => setprice(e.target.value)}
-            value={price}
-            // className={emptyFields.includes('load') ? 'error' : ''}
-          />
-    
-          <Label>Description</Label>
-          <Input 
-            type="text"
-            onChange={(e) => setdesc(e.target.value)}
-            value={desc}
-            // className={emptyFields.includes('reps') ? 'error' : ''}
-          />
-          <Label>Image</Label>
-          <FileInput 
+  return (
+    <Container>
+      <form className="create" onSubmit={handleSubmit}>
+        <Title><h3>Add a New Product For Sell</h3></Title>
+
+        <Label>Product Title</Label>
+        <Input
+          type="text"
+          onChange={(e) => setTitle(e.target.value)}
+          value={title}
+          required
+        // className={emptyFields.includes('title') ? 'error' : ''}
+        />
+
+        <Label>Price</Label>
+        <Input
+          type="number"
+          onChange={(e) => setprice(e.target.value)}
+          value={price} required
+        // className={emptyFields.includes('load') ? 'error' : ''}
+        />
+
+        <Label>Description</Label>
+        <Input
+          type="text"
+          onChange={(e) => setdesc(e.target.value)}
+          value={desc} required
+        // className={emptyFields.includes('reps') ? 'error' : ''}
+        />
+        <Label>Image</Label>
+        <FileInput
           type="file"
           name="photos"
           onChange={handleimage}
           className="form-control-file"
-          multiple
+          multiple required
         // className={emptyFields.includes('reps') ? 'error' : ''}
         />
         <Label>Catagory</Label>
-          <div className="dropdown-container">
-            <Select
-              options={optionList}
-              placeholder="Select category"
-              onChange={handleSelect}
-              value={categories}
-              isSearchable={true}
-              isMulti
-              styles={customStyles}
-            />
-          </div>
-    
-          {message && <Message>{message}</Message>}
-          <SubmitButton>Add Product</SubmitButton>
-          {error && <div className="error">{error}</div>}
-        </form>
-        </Container>
-      )
+        <div className="dropdown-container">
+          <Select
+            options={optionList}
+            placeholder="Select category"
+            onChange={handleSelect}
+            value={optionList.filter((option) =>
+              selectedCategories.includes(option.value)
+            )}
+            isSearchable={true}
+            isMulti
+            styles={customStyles} required
+          />
+        </div>
+
+        {message && <Message>{message}</Message>}
+        <SubmitButton>Add Product</SubmitButton>
+        {error && <div className="error">{error}</div>}
+      </form>
+    </Container>
+  )
 
 
 }

@@ -3,7 +3,7 @@ import Announcement from "../components/Announcement";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import styled from "styled-components";
-
+import axios from "axios";
 
 const Container = styled.div`
   max-width: 650px;
@@ -11,7 +11,6 @@ const Container = styled.div`
   padding: 20px;
   background-color: #e9e9e9;
   padding: 50px;
-
   margin-top: 50px;
   margin-bottom: 50px;
 `;
@@ -33,7 +32,6 @@ const Input = styled.input`
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
-
 `;
 
 const TextArea = styled.textarea`
@@ -56,41 +54,64 @@ const SubmitButton = styled.button`
   border: none;
   cursor: pointer;
   font-size: 15px;
-  
+
   &:hover {
     background-color: rgb(1, 163, 163);
   }
 `;
 
-
 const AddRentItem = () => {
-
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [categories, setCategories] = useState("");
+  const [imgfile, setImgFile] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleImageChange = (e) => {
+    e.preventDefault()
+    setImgFile(e.target.files[0]);
+  };
+
+  const handleImageSave = async () => {
+    const formData = new FormData();
+    formData.append("file", imgfile);
+    formData.append("upload_preset", "Product_image");
+
+    try {
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dcpremwwm/image/upload",
+        formData
+      );
+      console.log("Image uploaded:", response.data.secure_url);
+      return response.data.secure_url;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return "";
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Title:", title);
-    console.log("Description:", description);
-    console.log("Price:", price);
-    console.log("Categories:", categories);
+    const uploadedImageURL = await handleImageSave();
 
+    const formData = {
+      title,
+      description,
+      price,
+      categories,
+      image: uploadedImageURL,
+    };
+
+    console.log("Form Data:", formData);
+
+    // Reset form fields
     setTitle("");
     setDescription("");
     setPrice("");
     setCategories("");
+    setImgFile("");
   };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    // Perform necessary operations with the selected file
-    // For example, you can store it in state or display a preview of the image.
-    console.log("Selected file:", file);
-  };
-
 
   return (
     <div>
@@ -107,6 +128,7 @@ const AddRentItem = () => {
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              required
             />
           </div>
           <div>
@@ -114,8 +136,8 @@ const AddRentItem = () => {
             <TextArea
               id="description"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            ></TextArea>
+              onChange={(e) => setDescription(e.target.value)} required
+            />
           </div>
           <div>
             <Label htmlFor="image">Image:</Label>
@@ -123,7 +145,7 @@ const AddRentItem = () => {
               type="file"
               id="image"
               accept="image/*"
-              onChange={handleImageChange}
+              onChange={handleImageChange} required
             />
           </div>
           <div>
@@ -132,7 +154,7 @@ const AddRentItem = () => {
               type="text"
               id="price"
               value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              onChange={(e) => setPrice(e.target.value)} required
             />
           </div>
           <div>
@@ -141,7 +163,7 @@ const AddRentItem = () => {
               type="text"
               id="categories"
               value={categories}
-              onChange={(e) => setCategories(e.target.value)}
+              onChange={(e) => setCategories(e.target.value)} 
             />
           </div>
           <SubmitButton type="submit">Add Product</SubmitButton>

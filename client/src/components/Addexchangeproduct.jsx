@@ -168,69 +168,85 @@ const Addexchangeproduct = () => {
     var fileObject = e.target.files[0];
     setimgfile(fileObject);
   }
-  const handleimagesave = () => {
-    const formData = new FormData()
-    formData.append("file", imgfile)
-    formData.append("upload_preset", "Product_image")
-
-    axios.post(
-      "https://api.cloudinary.com/v1_1/dcpremwwm/image/upload", formData)
-      .then((response) => {
-        console.log("for image URL", response);
+  const handleimagesave = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("file", imgfile);
+      formData.append("upload_preset", "Product_image");
+  
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dcpremwwm/image/upload",
+        formData
+      );
+  
+      console.log("Image upload response:", response);
+      
+      if (response.status === 200) {
         setimg(response.data.secure_url);
-      }).catch((error) => {
-        console.log(error);
-      })
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setMessage('Please wait')
-    //add to the backend part 
-    handleimagesave()
-    console.log(img)
-    const user_email = user.user._id
-    // formData.append("user_email",user_email)
-    // formData.append("title",title)
-    // formData.append("desc",desc)
-    // formData.append("img",img)
-    // formData.append("preference",preference)
-    // formData.append("categories",categories)
-    // formData.append("exchangetype", exchangetype)
-
-
-    // console.log(formData)
-    // console.log(formData.get(img))
-    axios.post('http://localhost:3000/Addition/addexchange', //formData
-      {
-        user_email, title, desc, img, preference, selectedCategories, exchangetype
-      }, {
-      headers: {
-        'Content-Type': 'application/json' //, 'Authorization': `Bearer ${user.token}`  'multipart/form-data'  
+        return response.data.secure_url;
+      } else {
+        setMessage("Image upload failed");
+        return "";
       }
+    } catch (error) {
+      setMessage("Error uploading image");
+      return "";
     }
-    ).then((response) => {
-      console.log(response)
-      setTitle('')
-      setdesc('')
-      setprefer('')
-      setimg('')
-      setError(null)
-      setcategories('')
-      setexchangetype('')
-      setimgfile('')
-      if (response.statusText === 'OK') { setMessage('Product added successfully!') }
-    }).catch((error) => {
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage('Please wait');
+  
+    try {
+      // Await the image upload and URL setting
+      const imgUrl = await handleimagesave();
+      if (!imgUrl || imgUrl ==="") {
+        setMessage("Image upload failed. Please try again.");
+        return;
+      }
+  
+      const user_email = user.user._id;
+  
+      // Make sure img is set
+      // if (!img) {
+      //   setMessage("Image upload failed. Please try again.");
+      //   return;
+      // }
+  
+      const response = await axios.post('http://localhost:3000/api/Addition/addexchange', {
+        user_email, title, desc, img: imgUrl, preference, selectedCategories, exchangetype
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      console.log(response);
+      if (response.statusText === 'OK') {
+        setMessage('Product added successfully!');
+        // Clear the form fields
+        setTitle('');
+        setdesc('');
+        setprefer('');
+        setimg('');
+        setError(null);
+        setcategories('');
+        setexchangetype('');
+        setimgfile('');
+        setSelectedCategories([]);
+      }
+    } catch (error) {
       if (error.response) {
         console.log(error.response);
-        setMessage("server responded");
+        setMessage("Server responded with an error.");
       } else if (error.request) {
-        setMessage("network error");
+        setMessage("Network error.");
       } else {
         console.log(error);
+        setMessage("An error occurred.");
       }
-    })
-
+    }
   }
 
   return (

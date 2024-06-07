@@ -27,7 +27,7 @@ const ImgContainer = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  height: 70vh;
+  max-height: 70vh;
   object-fit: fit;
 `;
 
@@ -187,7 +187,7 @@ const Product = () => {
   const dispatch = useDispatch();
 
   const upperuser = JSON.parse(localStorage.getItem('user'))
-  const user = upperuser.user
+  const user = upperuser?.user
 
 
   useEffect(() => {
@@ -225,8 +225,8 @@ const Product = () => {
 
   const handlerent = async (e) => {
     e.preventDefault()
-    const owner_id = owner._id
-    const sender_id = user._id
+    const owner_id = owner?._id
+    const sender_id = user?._id
     console.log("sender", owner_id)
     const objectid = product._id
     console.log("product", objectid)
@@ -277,20 +277,20 @@ const Product = () => {
 
         <ImgContainer>
 
-          <Image src={product.img} />
+          <Image src={product?.img} />
 
         </ImgContainer>
 
         <InfoContainer>
           <Title>{product.title}</Title>
-          <OwnerInfo>Posted By <span>{owner.username}</span><Link to={`/messege?data=${product.user_email}`}>
+          <OwnerInfo>Posted By <span>{owner?.username}</span><Link to={`/messege?data=${product.user_email}`}>
             <SecondaryButton>
               Message
             </SecondaryButton>
           </Link></OwnerInfo>
 
-          <Desc>Description<br /> <span>{product.desc}</span> </Desc>
-          {product.categories && product.categories.length > 0 && (
+          <Desc>Description<br /> <span>{product?.desc}</span> </Desc>
+          {product.categories && product?.categories?.length > 0 && (
             <div>Tags</div>
           )}
           <CategoryContainer>

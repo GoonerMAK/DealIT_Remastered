@@ -136,7 +136,7 @@ const Addrent = () => {
   const [imgfile, setimgfile] = useState('')
   const [img, setimg] = useState('')
   const [price, setprice] = useState('')
-  const [prefer, setprefer] = useState('')
+  const [prefer, setprefer] = useState('Weekly')
   const [categories, setcategories] = useState()
   const [error, setError] = useState(null)
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -165,63 +165,97 @@ const Addrent = () => {
     var fileObject = e.target.files[0];
     setimgfile(fileObject);
   }
-  const handleimagesave = () => {
-    const formData = new FormData()
-    formData.append("file", imgfile)
-    formData.append("upload_preset", "Product_image")
-
-    axios.post(
-      "https://api.cloudinary.com/v1_1/dcpremwwm/image/upload", formData)
-      .then((response) => {
-        console.log(response);
+  const handleimagesave = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("file", imgfile);
+      formData.append("upload_preset", "Product_image");
+  
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dcpremwwm/image/upload",
+        formData
+      );
+  
+      console.log("Image upload response:", response);
+      
+      if (response.status === 200) {
         setimg(response.data.secure_url);
-      }).catch((error) => {
-        console.log(error);
-      })
-  }
-
+        return response.data.secure_url;
+      } else {
+        setMessage("Image upload failed");
+        return "";
+      }
+    } catch (error) {
+      setMessage("Error uploading image");
+      return "";
+    }
+  };
+  
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    //add to the backend part 
-    setMessage('Please wait')
-    //const formData = new FormData()
-    const user_email = user.user._id
-
-
-    handleimagesave()
-    // console.log(formData)
-    // console.log(formData.get(img))
-    axios.post('http://localhost:3000/api/Addition/addrent', //formData
-      {
-        user_email, title, desc, img, price, prefer, selectedCategories
-      }, {
-      headers: {
-        'Content-Type': 'application/json' //, 'Authorization': `Bearer ${user.token}`  'multipart/form-data'  
+    e.preventDefault();
+    setMessage('Please wait');
+  
+    try {
+  
+      const imgUrl = await handleimagesave();
+      if (!imgUrl || imgUrl ==="") {
+        setMessage("Image upload failed. Please try again.");
+        return;
       }
-    }
-    ).then((response) => {
-      console.log(response)
-      setTitle('')
-      setdesc('')
-      setprefer('')
-      setimg('')
-      setError(null)
-      setcategories('')
-      setprice('')
-      if (response.statusText === 'OK') { setMessage('Product added successfully!') }
-      setimgfile('')
-    }).catch((error) => {
+      const user_email = user.user._id;
+  
+      // if (!img) {
+      //   setMessage("Image upload failed. Please try again.");
+      //   return;
+      // }
+  
+      const response = await axios.post(
+        'http://localhost:3000/api/Addition/addrent',
+        {
+          user_email,
+          title,
+          desc,
+          img:imgUrl,
+          price,
+          prefer,
+          selectedCategories
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+            // 'Authorization': `Bearer ${user.token}`
+          }
+        }
+      );
+  
+      console.log(response);
+      setTitle('');
+      setdesc('');
+      setprefer('');
+      setimg('');
+      setError(null);
+      setcategories('');
+      setprice('');
+  
+      if (response.statusText === 'OK') {
+        setMessage('Product added successfully!');
+      }
+      setimgfile('');
+    } catch (error) {
       if (error.response) {
         console.log(error.response);
-        setMessage("server responded");
+        setMessage("Server responded with an error.");
       } else if (error.request) {
-        setMessage("network error");
+        console.log(error.request);
+        setMessage("Network error. Please check your internet connection.");
       } else {
         console.log(error);
+        setMessage("An error occurred while adding the product. Please try again later.");
       }
-    })
-  }
+    }
+  };
+  
 
   return (
     <Container>
@@ -253,7 +287,7 @@ const Addrent = () => {
         />
         <Label>Preference</Label>
         <Selection value={prefer} onChange={e => setprefer(e.target.value)}>
-          <option value="Weekly">weekly</option>
+          <option value="Weekly">Weekly</option>
           <option value="Monthly">Monthly</option>
           <option value="Yearly">Yearly</option>
         </Selection>

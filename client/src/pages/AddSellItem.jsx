@@ -77,7 +77,7 @@ const AddSellItem = () => {
     console.log("Price:", price);
     console.log("Categories:", categories);
 
-  
+
     setTitle("");
     setDescription("");
     setPrice("");
@@ -120,7 +120,9 @@ const AddSellItem = () => {
             <Label htmlFor="image">Image:</Label>
             <FileInput
               type="file"
+              name="photos"
               id="image"
+              className="form-control-file"
               accept="image/*"
               onChange={handleImageChange}
             />

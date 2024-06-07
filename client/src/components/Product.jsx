@@ -26,6 +26,7 @@ const Container = styled.div`
   flex: 1;
   margin: 5px;
   min-width: 330px;
+  max-width: 45vw;
   height: 380px;
   display: flex;
   align-items: center;
@@ -51,7 +52,7 @@ const Circle = styled.div`
 
 const Image = styled.img`
   height: 50%;
-  z-index: 2;        /* the image will be in front of the circle */
+  z-index: 2;        
   margin-bottom: 10px;
   max-width: 80%;
   object-fit: cover;
@@ -70,7 +71,7 @@ const Description = styled.div`,
 const Icon = styled.div`
   width: 40px;
   height: 40px;
-  border-radius: 50%;        /* radius allows us to create a circle */
+  border-radius: 50%;        
   background-color: white;
   display: flex;
   align-items: center;
