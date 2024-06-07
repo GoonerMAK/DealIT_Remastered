@@ -170,6 +170,8 @@ border-radius: 5px;
 margin-right:5px;
 `
 
+const Message = styled.div`
+margin:10px 0;`
 
 
 const Product = () => {
@@ -289,10 +291,10 @@ const Product = () => {
 
           <Desc>Description<br /> <span>{product.desc}</span> </Desc>
           {product.categories && product.categories.length > 0 && (
-              <div>Tags</div>
-            )}
+            <div>Tags</div>
+          )}
           <CategoryContainer>
-           
+
             {product.categories && product.categories.map((category, index) => (
               <span key={index}>
                 <Category>{category}</Category>
@@ -319,13 +321,13 @@ const Product = () => {
                 <Amount>{quantity}</Amount>
                 <Add onClick={() => handleQuantity("inc")} />
               </AmountContainer>
-              <br/>
+              <br />
               <div>
-              <PrimaryButton onClick={handleClick} >Add to cart</PrimaryButton>
-</div>
+                <PrimaryButton onClick={handleClick} >Add to cart</PrimaryButton>
+              </div>
             </AddContainer> : null}
           {isexchange && <Exchangerequest Product={product} />}
-          {isrent && <label>rent request has been sent</label>}
+          {isrent && <Message>Rent request has been sent!</Message>}
 
         </InfoContainer>
 

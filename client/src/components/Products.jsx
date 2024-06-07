@@ -13,10 +13,16 @@ const Container = styled.div`
     justify-content: space-between;
 `;
 
-const Products = ({cat, filters, sort}) => {
+const Title = styled.h1`
+  text-align: center;
+font-size:38px;
+color:teal;
+`;
+
+const Products = ({ cat, filters, sort }) => {
   //console.log(cat, filters, sort)
   console.log("filter", filters)
-  
+
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -71,17 +77,17 @@ const Products = ({cat, filters, sort}) => {
 
 
 
-  return (
+  return (<>
+    <Title>Browse Products</Title>
     <Container>
-
-        {cat
+      {cat
         ? products.map((item) => <Product item={item} key={item.id} />)
         : products
-            .slice(0, 8)
-            .map((item) => <Product item={item} key={item.id} />)}
+          .slice(0, 8)
+          .map((item) => <Product item={item} key={item.id} />)}
 
     </Container>
-
+  </>
   );
 };
 
