@@ -69,7 +69,6 @@ const Circle = styled.div`
 `;
 
 const CategoryItem = ({ item }) => {
-const CategoryItem = ({ item }) => {
   return (
     <Container>
       <Image src={item.img} />
