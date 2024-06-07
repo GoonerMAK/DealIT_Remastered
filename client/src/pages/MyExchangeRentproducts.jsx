@@ -15,9 +15,10 @@ const MyOrdersPage = styled.div`
 `;
 
 const MyOrdersContainer = styled.div`
-  margin: 2rem auto;
-  width: 1000px;
-  padding: 2rem;
+margin: 1rem auto;
+// width: 1000px;
+min-width:70vw;
+padding: 2rem;
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -97,7 +98,7 @@ const MyexchangeRentproducts = () => {
       <Navbar />
       
       <MyOrdersPage>
-        <Sidebar />
+        <Sidebar activePage={"Myrentexchange"} />
         <MyOrdersContainer>
           <Title>Exchanged or Rented Product</Title>
           {showRe&&products.map((product) => (

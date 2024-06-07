@@ -12,12 +12,12 @@ const MyOrdersPage = styled.div`
 `;
 
 const MyOrdersContainer = styled.div`
-  margin: 2rem auto;
-  width: 1000px;
+  margin: 1rem auto;
   padding: 2rem;
+  min-width:70vw;
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  // box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 
   height: 100%;
 `;
@@ -41,7 +41,7 @@ const MyOrders = () => {
       <Navbar />
       
       <MyOrdersPage>
-        <Sidebar />
+        <Sidebar activePage={"MyOrders"}/>
         <MyOrdersContainer>
           <Title>My orders</Title>
           <Pendingrequest/>

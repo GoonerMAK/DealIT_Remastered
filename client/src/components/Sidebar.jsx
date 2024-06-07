@@ -125,7 +125,7 @@ const Sidebar = ({ activePage }) => {
                 <SidebarIcon>
                   <StoreIcon />
                 </SidebarIcon>
-                <SidebarListItemText>Pending Request</SidebarListItemText>
+                <SidebarListItemText>Pending Requests</SidebarListItemText>
               </SidebarListItem>
             </StyledLink>
           </SidebarList>

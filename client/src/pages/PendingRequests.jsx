@@ -12,8 +12,9 @@ const PendingRequestsPage = styled.div`
 `;
 
 const PendingRequestsContainer = styled.div`
-  margin: 2rem auto;
-  width: 1000px;
+margin: 1rem auto;
+// width: 1000px;
+min-width:70vw;
   padding: 2rem;
   background-color: white;
   border-radius: 5px;
@@ -40,7 +41,7 @@ const PendingRequests = () => {
       <Navbar />
       
       <PendingRequestsPage>
-        <Sidebar />
+        <Sidebar activePage={"PendingRequests"}/>
         <PendingRequestsContainer>
           <Title>Pending Requests</Title>
           <RequestsExchanges/>
