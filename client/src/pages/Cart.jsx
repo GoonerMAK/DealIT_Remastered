@@ -66,7 +66,7 @@ const Info = styled.div`
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
-  border: 1px solid black;  
+  border: 1px solid lightgrey;  
   border-radius: 10px;  
   padding: 10px; 
 `;
@@ -279,7 +279,7 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice> {cart.total} /=</SummaryItemPrice>
             </SummaryItem>
-            <Button>CASH ON DELIVERY</Button>
+            <Button>CONFIRM ORDER</Button>
           </Summary>
 
         </Bottom>
