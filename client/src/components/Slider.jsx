@@ -1,5 +1,5 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
-import { useState } from "react";
+import { useState, useEffect, useRef  } from "react";
 import styled from "styled-components";
 import React from "react";
 import { sliderItems } from "../data";
@@ -91,6 +91,18 @@ display:flex;
 const Slider = () => {
   
   const [slideIndex, setSlideIndex] = useState(0);
+  const intervalRef = useRef(null);
+
+
+  const resetInterval = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    intervalRef.current = setInterval(() => {
+      setSlideIndex((prev) => (prev < sliderItems.length - 1 ? prev + 1 : 0));
+    }, 3000);
+  };
+
 
   const handleClick = (direction) => {
     if (direction === "left") {
@@ -98,7 +110,19 @@ const Slider = () => {
     } else {
       setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
     }
+    resetInterval();
     }
+
+
+    useEffect(() => {
+      resetInterval();
+      return () => {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+        }
+      };
+    }, []);
+    
 
   return (
     <Container>
