@@ -11,12 +11,13 @@
   .chatMenuInput {
     width: 100%;
     padding: 10px 0;
-    padding-left: 30px;
+    padding: 10px;
+    text-align: center;
+    font-weight: 400;
     border: none;
-    border: 1px solid rgb(1, 73, 73);
     background-color: teal;
     color: white;
-    border-radius: 5px;
+    border-radius: 7px;
   }
   
   .chatBox {
@@ -45,9 +46,19 @@
   }
   
   .chatMessageInput {
-    width: 80%;
-    height: 90px;
-    padding: 10px;
+    width: 90%;
+  height: 60px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical; /* Allow vertical resizing */
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  }
+  .chatMessageInput:focus{
+    outline: none;
+    border-color: teal;
   }
   
   .chatSubmitButton {
