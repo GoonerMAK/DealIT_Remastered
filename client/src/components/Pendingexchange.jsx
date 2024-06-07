@@ -160,7 +160,7 @@ margin-top:10px;
 `;
 
 
-const Pendingexchange = ({ request }) => {
+const   Pendingexchange = ({ request }) => {
   const [product, setProduct] = useState('')
   const [returndate, setreturndate] = useState(request.return_date)
   const [selected, setselected] = useState(false)
@@ -350,14 +350,13 @@ const Pendingexchange = ({ request }) => {
 
         {!updated && !request.sender_verify && !request.owner_verify && (
           <>
-            {request.sender_verify ? (
-              <>
-                <label>You have already processed it. </label>
-              </>
-            ) : (
+            {(!request.sender_verify && request.owner_verify)  ? (
               <>
                 <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
                 <RejectButton onClick={handlereject}>Reject</RejectButton>
+              </>
+            ) : (
+              <>
               </>
             )}
             {request.owner_verify ? (
@@ -392,7 +391,7 @@ const Pendingexchange = ({ request }) => {
         )}
 
         {(request.sender_verify || updated) && (
-          <ContractButton onClick={handleclick}>Show Contract</ContractButton>
+          <ContractButton onClick={handleclick}>{selected? "Hide Contract": "Show Contract"}</ContractButton>
         )}
 
         {selected && <Contractforexc text={text} />}

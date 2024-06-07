@@ -16,6 +16,11 @@ const Title = styled.h3`
   font-size:38px;
   color:teal;
 `;
+const Message = styled.div`
+width:100%;
+text-align:center;
+font-size:16px;
+margin-top:5px;`
 
 const Label = styled.label`
   display: block;
@@ -65,6 +70,7 @@ const Exchangerequest = (product) =>{
     const [returndate, setreturndate] = useState('')
     const [desc, setdesc] = useState('')
     const [error, setError] = useState(null)
+    const [message, setMessage] = useState("")
 
 
     const handleimage= (e)=>{
@@ -76,54 +82,77 @@ const Exchangerequest = (product) =>{
       }
 
 
-      const handleimagesave=()=>{
-        const formData = new FormData()
-          formData.append("file", imgfile)
-          formData.append("upload_preset", "Product_image")
-  
-          axios.post(
-            "https://api.cloudinary.com/v1_1/dcpremwwm/image/upload",formData)
-            .then((response) => {
-              console.log("for image URL", response);
-              setimg(response.data.secure_url);
-              }).catch((error) => {
-                console.log(error);
-            })
+      const handleimagesave = async () => {
+        try {
+          const formData = new FormData();
+          formData.append("file", imgfile);
+          formData.append("upload_preset", "Product_image");
+      
+          const response = await axios.post(
+            "https://api.cloudinary.com/v1_1/dcpremwwm/image/upload",
+            formData
+          );
+      
+          console.log("Image upload response:", response);
+          
+          if (response.status === 200) {
+            setimg(response.data.secure_url);
+            return response.data.secure_url;
+          } else {
+            setMessage("Image upload failed");
+            return "";
+          }
+        } catch (error) {
+          setMessage("Error uploading image");
+          return "";
+        }
+      };
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+    setMessage('Please wait')
+      
+        try {
+          const imageUrl = await handleimagesave();
+
+          if(!imageUrl || imageUrl===""){
+              setMessage("Image Upload Failed! Try again.")
+              return
+          }
+          const owner_id = Product.user_email;
+          const sender_id = user.user._id;
+          const objectid = Product._id;
+      
+          console.log("sender", owner_id);
+          console.log("product", objectid);
+      
+          // Add to the backend part
+          const response = await axios.post('http://localhost:3000/api/Addition/exchangerequest', 
+            { title, desc, img: imageUrl, sender_id, owner_id, objectid, returndate }
+          );
+      
+          console.log(response);
+          setTitle('');
+          setdesc('');
+          setreturndate('');
+          setimg('');
+          setError(null);
+          setimgfile('');
+          setMessage("Request placed successfully!")
+      
+        } catch (error) {
+          if (error.response) {
+            console.log(error.response);
+            console.log("server responded");
+          } else if (error.request) {
+            console.log("network error");
+          } else {
+            console.log(error);
+          }
+          setMessage("Request failed. Try again!")
+        }
       }
-
-    const handleSubmit  = async(e) => {
-        handleimagesave()
-        const owner_id=Product.user_email
-        const sender_id=user.user._id 
-        console.log("sender",owner_id)
-        const objectid=Product._id
-        console.log("product",objectid)
-        e.preventDefault()
-        //add to the backend part 
-        
-        console.log(img)
-        await axios.post('http://localhost:3000/api/Addition/exchangerequest', 
-        {title, desc, img, sender_id, owner_id, objectid,returndate}
-        ).then((response)=>{
-            console.log(response)
-            setTitle('')
-            setdesc('')
-            setreturndate('')
-            setimg('')
-            setError(null)
-            setimgfile('')
-          }).catch((error)=>{
-            if (error.response) {
-              console.log(error.response);
-              console.log("server responded");
-            } else if (error.request) {
-              console.log("network error");
-            } else {
-              console.log(error);
-            }
-          })
-
-    }
+      
 
 
     return (
@@ -159,6 +188,7 @@ const Exchangerequest = (product) =>{
           <Label>Return Date:</Label>
 
         <Input type="date" onChange={(e) => setreturndate(e.target.value)} value={returndate}/>
+        {message && <Message>{message}</Message>}
           <Button>Place a Request</Button>
 
           {error && <Error className="error">{error}</Error>}

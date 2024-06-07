@@ -4,7 +4,7 @@ import Announcement from "../components/Announcement";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import styled from "styled-components";
-import RequestsExchanges from "../components/RequestsExchanges"
+import RequestsExchanges from "../components/RequestsExchangesAndRents"
 
 
 const PendingRequestsPage = styled.div`

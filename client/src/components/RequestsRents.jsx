@@ -268,7 +268,12 @@ const RequestsRents = ({ request }) => {
             <ProductDetail>
               <Image src={product.img} />
               <Details>
-                <Title>{product.title}</Title>
+                <Link to={`/product/${product._id}`} style={{
+                  textDecoration: "none",
+                  ":hover": {
+                    textDecoration: "underline",
+                  }
+                }}><Title>{product.title}</Title></Link>
                 <Label>Preferred rent type: {renttype}</Label>
                 <Label>Change rent type?</Label>
                 {!updated && (
@@ -286,10 +291,17 @@ const RequestsRents = ({ request }) => {
                   onChange={(e) => setprice(e.target.value)}
                   value={price}
                 />
-                {request.owner_verify || updated ? (
-                  <VerifiedLabel>This product is already verified</VerifiedLabel>
+                {updated ? (
+                  <>
+                    {request.owner_verify ? (
+                      <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
+                    ) : (
+                      <label>Owner hasn't verified this product yet.</label>
+                    )}
+
+                  </>
                 ) : (
-                  <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
+                  <label>You have already processed this</label>
                 )}
               </Details>
             </ProductDetail>
@@ -307,7 +319,7 @@ const RequestsRents = ({ request }) => {
 
         {(request.owner_verify || updated) && (
           <ContractViewer>
-            <ContractButton onClick={handleclick}>Show Contract</ContractButton>
+            <ContractButton onClick={handleclick}>{selected? "Hide Contract": "Show Contract"}</ContractButton>
           </ContractViewer>
         )}
         <ContractViewer>{selected && <Contractforexc text={text} />}</ContractViewer>

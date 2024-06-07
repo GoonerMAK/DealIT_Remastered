@@ -16,12 +16,11 @@ const MyOrdersPage = styled.div`
 
 const MyOrdersContainer = styled.div`
 margin: 1rem auto;
-// width: 1000px;
-min-width:70vw;
-padding: 2rem;
+  padding: 0.4rem;
+  min-width:70vw;
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  // box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 
   height: 100%;
 `;

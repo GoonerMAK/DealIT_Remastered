@@ -299,7 +299,7 @@ const Pendingrentrequests = ({ request }) => {
             <ProductDetail>
             <Image src={product?.img} />
               <Details>
-                <Label> <strong>Rent: </strong> {product?.title}</Label>
+              <Link to={`/product/${product._id}`}><Label>{product.title}</Label></Link>
                 <Label> <strong>Price: </strong> {request.proposed_price}</Label>
                 <Label> <strong>Type: </strong> {request.renttype}</Label>
                 {/* <Title>{request.title}</Title> */}
@@ -310,7 +310,7 @@ const Pendingrentrequests = ({ request }) => {
           </Product>
           </Info>
 
-          {updated ? (
+          {(!updated && (!request.sender_verify || !request.owner_verify)) ? (
             <>
               {request.owner_verify ? (
                 <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
@@ -324,7 +324,7 @@ const Pendingrentrequests = ({ request }) => {
               )}
             </>
           ) : (
-            <label>You have already processed this</label>
+            <label>Request has been processed.</label>
           )}
           {showConfirmation && (
             <ConfirmationDialog
@@ -341,7 +341,7 @@ const Pendingrentrequests = ({ request }) => {
             />
           )}
           {(request.sender_verify || updated) && (
-            <ContractButton onClick={handleclick}>Show Contract</ContractButton>
+            <ContractButton onClick={handleclick}>{selected? "Hide Contract": "Show Contract"}</ContractButton>
           )}
           {selected && <Contractforexc text={text} />}
       </Wrapper>

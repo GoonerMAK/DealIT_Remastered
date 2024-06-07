@@ -322,19 +322,28 @@ const Requestsexchange = ({ request }) => {
             </Productdate>
 
 
-            <Product>
-
-              <ProductDetail>
-
-                {request.owner_verify || updated ? (
-                  <VerificationLabel>This Product is Already Verified</VerificationLabel>
+            {!updated && !request.sender_verify && !request.owner_verify && (
+              <>
+                {request.sender_verify ? (
+                  <>
+                    <label>This product has been verified by the sender.</label>
+                  </>
                 ) : (
-                  <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
+                  <>
+                    <label>Sender hasn't verified this product yet. </label>
+                  </>
                 )}
-
-              </ProductDetail>
-
-            </Product>
+                {request.owner_verify ? (
+                  <>
+                    <label>You have already processed it. </label>
+                  </>
+                ) : (
+                  <>
+                    <VerifyButton onClick={handleaccept}>Verify</VerifyButton>
+                  </>
+                )}
+              </>
+            )}
 
 
             <Product>

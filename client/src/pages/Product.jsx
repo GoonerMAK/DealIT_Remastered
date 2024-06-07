@@ -305,10 +305,10 @@ const Product = () => {
           {product.price && <Price>Tk {product.price}</Price>}
 
           {product.exchangetype && <Desc>
-            Preference: {product.exchangetype}
+            Exchange Type: {product?.exchangetype}
           </Desc>}
           {product.prefer && <Desc>
-            {product.prefer}
+            Preferred Exchange Item: {product.prefer}
           </Desc>}
 
           {product.purpose === "Exchange" ? <PrimaryButton onClick={handleexchange}>Exchange</PrimaryButton> : null}

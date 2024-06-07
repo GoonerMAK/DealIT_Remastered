@@ -20,7 +20,7 @@ const Title = styled.h1`
   font-weight: 300;
   text-align: center;
 font-size:38px;
-color:teal;
+// color:teal;
 `;
 
 const Top = styled.div`
@@ -33,6 +33,7 @@ const Top = styled.div`
 const TopButton = styled.button`
   padding: 10px;
   font-weight: 600;
+  border-radius:6px;
   cursor: pointer;
   border: ${(props) => props.type === "filled" && "none"};
   background-color: ${(props) =>
@@ -81,7 +82,7 @@ const Details = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  // justify-content: space-around;
 `;
 
 const ProductName = styled.span``;
@@ -155,6 +156,7 @@ const Button = styled.button`
   width: 100%;
   padding: 10px;
   background-color: black;
+  border-radius:6px;
   color: white;
   font-weight: 600;
   cursor : pointer;transition: all 500ms ease;
@@ -168,6 +170,7 @@ const RemoveButton = styled.button`
   height: 50px;
   background-color: black;
   color: white;
+  border-radius:6px;
   font-weight: 600;
   cursor : pointer;
     
@@ -204,9 +207,9 @@ const Cart = () => {
           </Link>
           <TopTexts>
           </TopTexts>
-          <Link to="/messege">
+          {/* {quantity > 0 && (<Link to="/messege">
             <TopButton type="filled">CHAT WITH OWNER</TopButton>
-          </Link>
+          </Link>)} */}
         </Top>
 
         <Bottom>
@@ -215,35 +218,37 @@ const Cart = () => {
 
             {cart.products.map((product) => (
 
-              <Product key={product.id} product={product} handleRemoveProduct={handleRemoveProduct}>
+              <div style={{ marginBottom: '15px', backgroundColor: "#f5fbfd", padding: '10px', borderRadius: '10px' }}>
+                <Product key={product._id} product={product} handleRemoveProduct={handleRemoveProduct}>
 
-                <ProductDetail>
-                  <Image src={product.img} />
-                  <Details>
-                    <ProductName>
-                      <b>Product:</b> {product.title}
-                    </ProductName>
-                    <ProductId>
-                      <b>ID:</b> {product.id}
-                    </ProductId>
-                    <ProductColor color="black" />
-                    <ProductSize>
-                      <b>Size:</b> A
-                    </ProductSize>
-                  </Details>
-                </ProductDetail>
+                  <ProductDetail>
+                    <Image src={product.img} />
+                    <Details>
+                      <ProductName>
+                        <b>Product:</b> <Link to={`product/${product._id}`}>{product.title}
+                        </Link>
+                      </ProductName>
+                      <ProductId>
+                        <b>ID:</b> {product._id}
+                      </ProductId>
+                      <ProductColor color="black" />  
+                      <ProductSize>
+                        <b>Size:</b> A
+                      </ProductSize>
+                    </Details>
+                  </ProductDetail>
 
-                <PriceDetail>
-                  <ProductAmountContainer>
-                    <ProductAmount> Quantity: {product.quantity} </ProductAmount>
-                  </ProductAmountContainer>
-                  <ProductPrice> {product.price * product.quantity} /=</ProductPrice>
-                </PriceDetail>
+                  <PriceDetail>
+                    <ProductAmountContainer>
+                      <ProductAmount> Quantity: {product.quantity} </ProductAmount>
+                    </ProductAmountContainer>
+                    <ProductPrice> {product.price * product.quantity} /=</ProductPrice>
+                  </PriceDetail>
 
-                <RemoveButton onClick={() => handleRemoveProduct(product.id)}>REMOVE</RemoveButton>
+                  <RemoveButton onClick={() => handleRemoveProduct(product.id)}>REMOVE</RemoveButton>
 
-              </Product>
-
+                </Product>
+              </div>
             ))}
 
 

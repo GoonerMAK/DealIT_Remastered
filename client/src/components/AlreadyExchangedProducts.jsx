@@ -269,7 +269,7 @@ const AlreadyExchangedProducts = ({ product }) => {
 
             </Product>
 
-            <ContractButton onClick={handleclick}>Show Contract</ContractButton>
+            <ContractButton onClick={handleclick}>{selected? "Hide Contract": "Show Contract"}</ContractButton>
             {selected && <Contractforexc text={product.contract} />}
 
           </Info>
