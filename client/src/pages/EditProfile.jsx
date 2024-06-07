@@ -38,20 +38,26 @@ const Input = styled.input`
 
 const Title = styled.h1`
   text-align: center;
+  font-size:38px;
+  color:teal;
 `;
 
 const SubmitButton = styled.button`
-  padding: 10px 20px;
+padding: 10px 20px;
   background-color: teal;
   color: #fff;
   border: none;
+  border-radius:25px;
   cursor: pointer;
-  Font-size: 15px;
-
+  font-size: 15px;
+  margin-top:10px;
   &:hover {
     background-color: rgb(1, 163, 163);
   }
 `;
+
+const Label=styled.label`
+  color:teal;`
 
 
 const EditProfile = () => {
@@ -76,12 +82,12 @@ const EditProfile = () => {
       <Navbar />
       
       <EditProfilePage>
-        <Sidebar />
+        <Sidebar activePage={"EditProfile"}/>
         <EditProfileContainer>
           <Title>Edit Profile</Title>
           <Form onSubmit={handleUpdate}>
             <FormGroup>
-              <label>Username</label>
+              <Label>Username</Label>
               <Input
                 type="text"
                 value={username}
@@ -89,7 +95,7 @@ const EditProfile = () => {
               />
             </FormGroup>
             <FormGroup>
-              <label>Email</label>
+              <Label>Email</Label>
               <Input
                 type="email"
                 value={email}
@@ -97,7 +103,7 @@ const EditProfile = () => {
               />
             </FormGroup>
             <FormGroup>
-              <label>NID</label>
+              <Label>NID</Label>
               <Input
                 type="text"
                 value={nid}
@@ -105,7 +111,7 @@ const EditProfile = () => {
               />
             </FormGroup>
             <FormGroup>
-              <label>Phone Number</label>
+              <Label>Phone Number</Label>
               <Input
                 type="text"
                 value={phone}
@@ -113,7 +119,7 @@ const EditProfile = () => {
               />
             </FormGroup>
             <FormGroup>
-              <label>Password</label>
+              <Label>Password</Label>
               <Input
                 type="password"
                 value={password}

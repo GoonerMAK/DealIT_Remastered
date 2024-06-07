@@ -39,7 +39,7 @@ export const sliderItems = [
     {
       id: 3,
       img: "https://i.ibb.co/N7dfxFV/cook1.png"  ,
-      title: "TRADE ITEMS",
+      title: "BUY ITEMS",
       cat:"Sell",
     },
   ];

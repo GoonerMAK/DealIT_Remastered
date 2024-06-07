@@ -6,13 +6,15 @@ import { useAuthContext } from '../hooks/useAuthContext'
 
 const Form = styled.form`
   max-width: 400px;
-  margin-left: 70px;
+  // margin-left: 70px;
   margin-top: 10px;
 `;
 
 const Title = styled.h3`
   text-align: center;
   margin-bottom: 20px;
+  font-size:38px;
+  color:teal;
 `;
 
 const Label = styled.label`
@@ -126,7 +128,7 @@ const Exchangerequest = (product) =>{
 
     return (
         <Form className="exchange" onSubmit={handleSubmit} encType='multipart/form-data'> 
-            <Title>Place a request for exchange</Title>
+            {/* <Title>Place a request for exchange</Title> */}
     
             <Label>Product Title:</Label>
             <Input 

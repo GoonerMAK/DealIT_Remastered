@@ -50,7 +50,7 @@ const ProductRnetedorExchanged=()=>{
         <Requestsexchange  key={product._id} product={product} />
       ))}
       
-        </>:<label>no requesting products</label>}
+        </>:<label>No products requested</label>}
         </>
       )
     

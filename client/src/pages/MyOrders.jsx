@@ -25,6 +25,9 @@ const MyOrdersContainer = styled.div`
 
 const Title = styled.h1`
   text-align: center;
+  
+font-size:38px;
+color:teal;
 `;
 
 
@@ -40,7 +43,7 @@ const MyOrders = () => {
       <MyOrdersPage>
         <Sidebar />
         <MyOrdersContainer>
-          <Title>The Orders Made</Title>
+          <Title>My orders</Title>
           <Pendingrequest/>
         </MyOrdersContainer>
       </MyOrdersPage>

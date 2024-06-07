@@ -76,24 +76,14 @@ const Desc = styled.p`
   letter-spacing: 3px;
 `;
 
-const Button = styled.button`
+const Attention = styled.div`
 padding: 8px;
-cursor: pointer;
-border: 2px solid teal;
-background-color: teal;
-color:white;
+background-color: transparent;
+color:teal;
 font-weight: 600;
 font-size: 20px;
 border-radius:10px;
-transition: all 200ms ease;
-
-&:hover{
-    // background-color: #f8f4f9;
-    border: 2px solid teal;
-    color:teal;
-    background-color: white;
-    
-}
+display:flex;
 `;
 
 
@@ -125,7 +115,7 @@ const Slider = () => {
             <InfoContainer>
               <Title>{item.title}</Title>
               <Desc>{item.desc}</Desc>
-              <Button>CHECK OUT NOW</Button>
+              {/* <Attention>CHECK OUT NOW</Attention> */}
             </InfoContainer>
           </Slide>
         ))}

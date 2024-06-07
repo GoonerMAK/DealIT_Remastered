@@ -2,10 +2,11 @@ import { Badge } from "@material-ui/core";
 import { Search, ShoppingCartOutlined, Chat, Add, PersonOutline } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useLogout } from '../hooks/useLogout'
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 
 const Container = styled.div`
@@ -222,11 +223,21 @@ const SecondaryButton = styled.button`
 const Navbar = () => {
   const { logout } = useLogout()
   const { user } = useAuthContext()
+  const [searchValue, setSearchValue] = useState('');
   console.log(user)
 
   const handleClick = () => {
     logout()
   }
+
+  const navigate = useNavigate();
+
+  const search = () => {
+    if (searchValue) {
+
+      navigate(`/search?query=${searchValue}`);
+    }
+  };
 
   const quantity = useSelector(state => state.cart.quantity)
 
@@ -235,8 +246,8 @@ const Navbar = () => {
       <Wrapper>
         <Left>
           <SearchContainer>
-            <Input placeholder="Search" />
-            <Search style={{ color: "teal", fontSize: 20, marginLeft: '5px', marginRight: '2px' }} />
+            <Input placeholder="Search" value={searchValue} onChange={(event) => setSearchValue(event.target.value)} />
+            <span onClick={search}><Search style={{ color: "teal", fontSize: 20, marginLeft: '5px', marginRight: '2px', cursor:'pointer'}} /></span>
           </SearchContainer>
         </Left>
 
@@ -259,10 +270,10 @@ const Navbar = () => {
                 <Tooltip>Add Product</Tooltip>
                 <Link to="/addition">
                   <IconSpan>
-                  <div style={{paddingTop:'2.5px'}}>
-                    <Add />
+                    <div style={{ paddingTop: '2.5px' }}>
+                      <Add />
                     </div>
-                    </IconSpan>
+                  </IconSpan>
                 </Link>
               </AddIconContainer>
 
@@ -273,11 +284,11 @@ const Navbar = () => {
           {user &&
             <MenuItem>
               <ChatContainer>
-                  <Tooltip>Chats</Tooltip>
+                <Tooltip>Chats</Tooltip>
                 <Link to="/messege">
                   <IconSpan>
-                    <div style={{paddingTop:'4px'}}>
-                    <Chat />
+                    <div style={{ paddingTop: '4px' }}>
+                      <Chat />
                     </div>
                   </IconSpan>
                 </Link>
@@ -292,11 +303,11 @@ const Navbar = () => {
             <div>
               <MenuItem>
                 <ProfileContainer>
-                    <Tooltip>{user.email}</Tooltip>
+                  <Tooltip>{user.email}</Tooltip>
                   <Link to="/Profile">
                     <IconSpan>
-                    <div style={{paddingTop:'2px'}}>
-                      <PersonOutline />
+                      <div style={{ paddingTop: '2px' }}>
+                        <PersonOutline />
                       </div>
                     </IconSpan>
                   </Link>
@@ -336,13 +347,13 @@ const Navbar = () => {
           <MenuItem>
             <LeftPadding> </LeftPadding>
             <CartContainer>
-                <Tooltip> Cart </Tooltip>
+              <Tooltip> Cart </Tooltip>
               <Link to="/Cart">
                 <IconSpan>
                   <Badge badgeContent={quantity} color="primary">
 
-                <div style={{paddingTop:'4px'}}>
-                    <ShoppingCartOutlined /></div>
+                    <div style={{ paddingTop: '4px' }}>
+                      <ShoppingCartOutlined /></div>
                   </Badge>
                 </IconSpan>
               </Link>

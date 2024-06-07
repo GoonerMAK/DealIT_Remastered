@@ -129,28 +129,28 @@ const customStyles = {
   }),
 };
 
-const Addrent= ()=>{
+const Addrent = () => {
   const { user } = useAuthContext()
   const [title, setTitle] = useState('')
   const [desc, setdesc] = useState('')
-  const [imgfile, setimgfile]=useState('')
+  const [imgfile, setimgfile] = useState('')
   const [img, setimg] = useState('')
-  const[price, setprice]= useState('')
-  const[prefer, setprefer]= useState('')
-  const [categories, setcategories]=useState()
+  const [price, setprice] = useState('')
+  const [prefer, setprefer] = useState('')
+  const [categories, setcategories] = useState()
   const [error, setError] = useState(null)
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [message, setMessage] = useState('')
 
-  const optionList=[{value:"Electronics", label:"Electronics"},
-  {value:"Pc Components", label:"Pc Components"},
-  {value:"Sports", label:"Sports"},
-  {value:"Home & Living", label:"Home & Living"},
-  {value:"Gadgets", label:"Gadgets"},
-  {value:"Laptop", label:"Laptop"},
-  {value:"Phone", label:"Phone"},
-  {value:"Education", label:"Education"},
-  {value:"Others", label:"Others"}
+  const optionList = [{ value: "Electronics", label: "Electronics" },
+  { value: "Pc Components", label: "Pc Components" },
+  { value: "Sports", label: "Sports" },
+  { value: "Home & Living", label: "Home & Living" },
+  { value: "Gadgets", label: "Gadgets" },
+  { value: "Laptop", label: "Laptop" },
+  { value: "Phone", label: "Phone" },
+  { value: "Education", label: "Education" },
+  { value: "Others", label: "Others" }
   ]
 
   const handleSelect = (selectedOptions) => {
@@ -158,49 +158,49 @@ const Addrent= ()=>{
     setSelectedCategories(selectedValues);
   };
 
-  const handleimage= (e)=>{
+  const handleimage = (e) => {
     e.preventDefault()
     // const formData = new FormData()
 
     var fileObject = e.target.files[0];
     setimgfile(fileObject);
   }
-  const handleimagesave=()=>{
+  const handleimagesave = () => {
     const formData = new FormData()
-      formData.append("file", imgfile)
-      formData.append("upload_preset", "Product_image")
+    formData.append("file", imgfile)
+    formData.append("upload_preset", "Product_image")
 
-      axios.post(
-        "https://api.cloudinary.com/v1_1/dcpremwwm/image/upload",formData)
-        .then((response) => {
-          console.log(response);
-          setimg(response.data.secure_url);
-          }).catch((error) => {
-            console.log(error);
-        })
+    axios.post(
+      "https://api.cloudinary.com/v1_1/dcpremwwm/image/upload", formData)
+      .then((response) => {
+        console.log(response);
+        setimg(response.data.secure_url);
+      }).catch((error) => {
+        console.log(error);
+      })
   }
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     //add to the backend part 
     setMessage('Please wait')
-    console.log(user._id)
     //const formData = new FormData()
-    const user_email= user.user._id
-    
-    
+    const user_email = user.user._id
+
+
     handleimagesave()
     // console.log(formData)
     // console.log(formData.get(img))
-     axios.post('http://localhost:3000/api/Addition/addrent', //formData
-      {user_email, title, desc, img, price, prefer, selectedCategories
-    }, {
-      headers:{
+    axios.post('http://localhost:3000/api/Addition/addrent', //formData
+      {
+        user_email, title, desc, img, price, prefer, selectedCategories
+      }, {
+      headers: {
         'Content-Type': 'application/json' //, 'Authorization': `Bearer ${user.token}`  'multipart/form-data'  
       }
     }
-    ).then((response)=>{
+    ).then((response) => {
       console.log(response)
       setTitle('')
       setdesc('')
@@ -211,7 +211,7 @@ const Addrent= ()=>{
       setprice('')
       if (response.statusText === 'OK') { setMessage('Product added successfully!') }
       setimgfile('')
-    }).catch((error)=>{
+    }).catch((error) => {
       if (error.response) {
         console.log(error.response);
         setMessage("server responded");
@@ -223,67 +223,67 @@ const Addrent= ()=>{
     })
   }
 
-    return (
-      <Container>
-        <form className="create" onSubmit={handleSubmit}>
-          <Title><h3>Add a New Product For Rent</h3></Title>
-    
-          <Label>Product Title</Label>
-          <Input 
-            type="text"
-            onChange={(e) => setTitle(e.target.value)}
-            value={title}
-            // className={emptyFields.includes('title') ? 'error' : ''}
-          />
-          
-          <Label>Price</Label>
-          <Input 
-            type="number"
-            onChange={(e) => setprice(e.target.value)}
-            value={price}
-            // className={emptyFields.includes('load') ? 'error' : ''}
-          />
-    
-          <Label>Description</Label>
-          <Input 
-            type="text"
-            onChange={(e) => setdesc(e.target.value)}
-            value={desc}
-            // className={emptyFields.includes('reps') ? 'error' : ''}
-          />
+  return (
+    <Container>
+      <form className="create" onSubmit={handleSubmit}>
+        <Title><h3>Add a New Product For Rent</h3></Title>
+
+        <Label>Product Title</Label>
+        <Input
+          type="text"
+          onChange={(e) => setTitle(e.target.value)}
+          value={title}
+        // className={emptyFields.includes('title') ? 'error' : ''}
+        />
+
+        <Label>Price</Label>
+        <Input
+          type="number"
+          onChange={(e) => setprice(e.target.value)}
+          value={price}
+        // className={emptyFields.includes('load') ? 'error' : ''}
+        />
+
+        <Label>Description</Label>
+        <Input
+          type="text"
+          onChange={(e) => setdesc(e.target.value)}
+          value={desc}
+        // className={emptyFields.includes('reps') ? 'error' : ''}
+        />
         <Label>Preference</Label>
         <Selection value={prefer} onChange={e => setprefer(e.target.value)}>
-            <option value="Weekly">weekly</option>
-            <option value="Monthly">Monthly</option>
-            <option value="Yearly">Yearly</option>
+          <option value="Weekly">weekly</option>
+          <option value="Monthly">Monthly</option>
+          <option value="Yearly">Yearly</option>
         </Selection>
-          <Label>Image</Label>
-          <FileInput 
+        <Label>Image</Label>
+        <FileInput
           type="file"
           name="photos"
           onChange={handleimage}
           className="form-control-file"
-           multiple
+          multiple
         // className={emptyFields.includes('reps') ? 'error' : ''}
-      />
-      <Label>Catagory</Label>
-          <div className="dropdown-container">
-            <Select
-              options={optionList}
-              placeholder="Select category"
-              onChange={handleSelect}
-              value={categories}
-              isSearchable={true}
-              isMulti
-              styles={customStyles}
-            />
-          </div>
-          {message && <Message>{message}</Message>}
-          <SubmitButton>Add Product</SubmitButton>
-          {error && <div className="error">{error}</div>}
-        </form>
-        </Container>
-      )
+        />
+        <Label>Catagory</Label>
+        <div className="dropdown-container">
+          <Select
+            options={optionList}
+            placeholder="Select category"
+            onChange={handleSelect}
+            value={categories}
+            isSearchable={true}
+            isMulti
+            styles={customStyles}
+          />
+        </div>
+        {message && <Message>{message}</Message>}
+        <SubmitButton>Add Product</SubmitButton>
+        {error && <div className="error">{error}</div>}
+      </form>
+    </Container>
+  )
 
 
 }

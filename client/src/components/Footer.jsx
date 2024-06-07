@@ -51,6 +51,9 @@ import {
   
   const Title = styled.h3`
     margin-bottom: 30px;
+    font-size:38px;
+    color:teal;
+    text-align:center;
   `;
   
   const List = styled.ul`

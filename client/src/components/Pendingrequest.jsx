@@ -76,7 +76,7 @@ const Pendingrequest=()=>{
           {showRe&&rentrequests.map((request) => (
             <Pendingrentrequests  key={request._id} request={request} />
           ))}
-            {(!show&&!showRe)&&<label>no pending requests</label>}
+            {(!show&&!showRe)&&<label>No pending requests</label>}
         </>
         
       )

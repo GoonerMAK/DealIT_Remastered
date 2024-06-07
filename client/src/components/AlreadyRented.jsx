@@ -15,16 +15,17 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 34px;
-  color: #333;
   margin-bottom: 10px;
   text-align: center;
+font-size:38px;
+color:teal;
 `;
 
 const RequestContainer = styled.div`
-  margin: 2rem auto;
-  width: 1000px;
-  padding: 2rem;
+margin: 1rem auto;
+// width: 1000px;
+min-width:70vw;
+padding: 2rem;
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -142,16 +143,22 @@ const MessageLink = styled(Link)`
 `;
 
 const ContractButton = styled.button`
+margin-top:10px;
+  margin-bottom:10px;
   padding: 8px;
-  border: 3px solid teal;
-  background-color: white;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 15px;
+border: 3px solid teal;
+background-color: white;
+color:teal;
+border-radius:7px;
+cursor: pointer;
+font-weight: 500;
+font-size: 15px;
+transition: all 500ms ease;
 
-  &:hover {
-    background-color: #f8f4f9;
-  }
+&:hover {
+  background-color: teal;
+  color: white;
+}
 `;
 
 const  AlreadyRented = ({product}) => {

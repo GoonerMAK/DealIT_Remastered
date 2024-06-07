@@ -28,6 +28,8 @@ const MyOrdersContainer = styled.div`
 
 const Title = styled.h1`
   text-align: center;
+  font-size:38px;
+  color:teal;
 `;
 
 
@@ -106,7 +108,7 @@ const MyexchangeRentproducts = () => {
         < AlreadyRented key={product._id} product={product} />
         
       ))}
-      {(!showRe&&!show)&&<label>NO Products</label>}
+      {(!showRe&&!show)&&<label>No Products</label>}
         </MyOrdersContainer>
       </MyOrdersPage>
 
