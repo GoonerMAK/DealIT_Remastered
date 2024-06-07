@@ -261,6 +261,7 @@ const AlreadyRented = ({ product }) => {
                   {isowner && <Label><strong>Rented to:</strong> {sender.username}</Label>}
                   {issender && <Label><strong>Rented from:</strong> {owner.username}</Label>}
                   <Label><strong>Rented For:</strong> {product.renttype}</Label>
+                  <Label><strong>Description:</strong> {productData.desc}</Label>
                   <Label><strong>Rent:</strong> {product.rent_price}</Label>
                 </Details>
 
