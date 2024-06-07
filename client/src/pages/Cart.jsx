@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { removeProduct } from "../redux/cartRedux";
-import { Dispatch } from "react-redux";
 
 const Container = styled.div``;
 
@@ -61,12 +60,15 @@ const Bottom = styled.div`
 const Info = styled.div`
   flex: 3;
   margin-left: 20px;
-  margin-right: 20px;
+  margin-right: 20px;       
 `;
 
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
+  border: 1px solid black;  
+  border-radius: 10px;  
+  padding: 10px; 
 `;
 
 const ProductDetail = styled.div`
@@ -85,7 +87,13 @@ const Details = styled.div`
   // justify-content: space-around;
 `;
 
-const ProductName = styled.span``;
+const ProductName = styled.span`
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: brown;
+`;
 
 const ProductId = styled.span``;
 
@@ -97,6 +105,8 @@ const ProductColor = styled.div`
 `;
 
 const ProductSize = styled.span``;
+
+const ProductDesc = styled.span``;
 
 const PriceDetail = styled.div`
   flex: 1;
@@ -225,16 +235,17 @@ const Cart = () => {
                     <Image src={product.img} />
                     <Details>
                       <ProductName>
-                        <b>Product:</b> <Link to={`product/${product._id}`}>{product.title}
-                        </Link>
+                        <b>Title:</b> {" "}
+                        <StyledLink to={`/product/${product._id}`}>{product.title}
+                        </StyledLink>
                       </ProductName>
                       <ProductId>
                         <b>ID:</b> {product._id}
                       </ProductId>
-                      <ProductColor color="black" />  
-                      <ProductSize>
-                        <b>Size:</b> A
-                      </ProductSize>
+                      {/* <ProductColor color="black" />   */}
+                      <ProductDesc>
+                        <b>Description:</b> {product.desc}
+                      </ProductDesc>
                     </Details>
                   </ProductDetail>
 
