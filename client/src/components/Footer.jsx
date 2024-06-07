@@ -51,9 +51,6 @@ import {
   
   const Title = styled.h3`
     margin-bottom: 30px;
-    font-size:38px;
-    color:teal;
-    text-align:center;
   `;
   
   const List = styled.ul`
@@ -88,11 +85,9 @@ import {
     return (
       <Container>
         <Left>
-          <Logo>Deal IT</Logo>
+          <Logo>DeaLIT</Logo>
           <Desc>
-            There are many variations of passages of Lorem Ipsum available, but
-            the majority have suffered alteration in some form, by injected
-            humour, or randomised words which don't look even slightly believable.
+          We offer a seamless platform for users to verify and manage product requests, allowing you to easily accept or reject transactions once the product's owner and sender have verified them.
           </Desc>
           <SocialContainer>
             <SocialIcon color="3B5999">
