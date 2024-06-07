@@ -117,6 +117,7 @@ const Product = ({ item }) => {
     dispatch(
       addProduct({ ...item, quantity, price })
     );
+    window.alert("Added to Cart");
   };
   return (
     <Container>
