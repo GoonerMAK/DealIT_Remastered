@@ -4,6 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import Contractforexc from "./Contractforexc";
 import { current } from "@reduxjs/toolkit";
 import ConfirmationDialog from "./ConfirmationDialog";
@@ -16,6 +17,8 @@ const Wrapper = styled.div`
 const Title = styled.h1`
   margin-bottom: 10px;
   text-align: center;
+font-size:38px;
+color:teal;
 font-size:38px;
 color:teal;
 `;
@@ -235,7 +238,6 @@ const AlreadyExchangedProducts = ({ product }) => {
       <Wrapper>
         <RequestContainer>
           {/* <Title>Exchanged Product</Title> */}
-
           <Info>
             <Product>
 
@@ -254,25 +256,22 @@ const AlreadyExchangedProducts = ({ product }) => {
                   <Label> <strong>Return Date: </strong> {formatDate(product.return_date)} </Label>
                 </Details>
 
-                
+
               </ProductDetail>
               {user._id === product.owner_id ? (
-                  <Link to={`/message?data=${product.sender_id}`}>
-                    <MessageButton>Message</MessageButton>
-                  </Link>
-                ) : (
-                  <Link to={`/message?data=${product.owner_id}`}>
-                    <MessageButton>Message</MessageButton>
-                  </Link>
-                )}
+                <Link to={`/message?data=${product.sender_id}`}>
+                  <MessageButton>Message</MessageButton>
+                </Link>
+              ) : (
+                <Link to={`/message?data=${product.owner_id}`}>
+                  <MessageButton>Message</MessageButton>
+                </Link>
+              )}
 
             </Product>
 
-       
-              <ContractButton onClick={handleclick}>Show Contract</ContractButton>
-              {selected && <Contractforexc text={product.contract} />}
-
-      
+            <ContractButton onClick={handleclick}>Show Contract</ContractButton>
+            {selected && <Contractforexc text={product.contract} />}
 
           </Info>
         </RequestContainer>

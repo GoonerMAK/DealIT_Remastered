@@ -201,7 +201,7 @@ const Addexchangeproduct = () => {
 
     // console.log(formData)
     // console.log(formData.get(img))
-    axios.post('http://localhost:3000/api/Addition/addexchange', //formData
+    axios.post('http://localhost:3000/Addition/addexchange', //formData
       {
         user_email, title, desc, img, preference, selectedCategories, exchangetype
       }, {
