@@ -6,8 +6,8 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { removeProduct } from "../redux/cartRedux";
+import { Link, useNavigate   } from "react-router-dom";
+import { removeProduct, resetQuantity } from "../redux/cartRedux";
 
 const Container = styled.div``;
 
@@ -195,11 +195,20 @@ const Cart = () => {
 
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleRemoveProduct = (productId) => {
     dispatch(removeProduct(productId));
   };
   const quantity = useSelector(state => state.cart.quantity)
+
+  const handleConfirmOrder = () => {
+    window.alert("Your Order has been initiated, please proceed to talk with the owner of the product");
+    setTimeout(() => {
+      dispatch(resetQuantity());
+      navigate("/messege");
+    }, 500);
+  };
 
 
   return (
@@ -279,7 +288,9 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice> {cart.total} /=</SummaryItemPrice>
             </SummaryItem>
-            <Button>CONFIRM ORDER</Button>
+
+            <Button onClick={handleConfirmOrder}>CONFIRM ORDER</Button> 
+
           </Summary>
 
         </Bottom>
