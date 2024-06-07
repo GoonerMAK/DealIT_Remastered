@@ -38,6 +38,10 @@ const TopButton = styled.button`
   background-color: ${(props) =>
     props.type === "filled" ? "black" : "transparent"};
   color: ${(props) => props.type === "filled" && "white"};
+  transition: all 500ms ease;
+
+  &:hover{
+    transform: scale(1.25);  }
 `;
 
 const TopTexts = styled.div`
@@ -153,7 +157,10 @@ const Button = styled.button`
   background-color: black;
   color: white;
   font-weight: 600;
-  cursor : pointer;
+  cursor : pointer;transition: all 500ms ease;
+
+  &:hover{
+    transform: scale(1.1);  }
 `;
 
 const RemoveButton = styled.button`
@@ -164,7 +171,10 @@ const RemoveButton = styled.button`
   font-weight: 600;
   cursor : pointer;
     
-  margin-top: 35px;
+  margin-top: 35px;transition: all 500ms ease;
+
+  &:hover{
+    transform: scale(1.2);  }
 `;
 
 
@@ -176,27 +186,26 @@ const Cart = () => {
   const handleRemoveProduct = (productId) => {
     dispatch(removeProduct(productId));
   };
+  const quantity = useSelector(state => state.cart.quantity)
 
 
   return (
     <Container>
       <Announcement />
       <Navbar />
-      
+
       <Wrapper>
 
-        <Title>YOUR BAG</Title>
+        <Title>CART ({quantity})</Title>
 
         <Top>
-          <Link to= "/" >                  
+          <Link to="/" >
             <TopButton>CONTINUE SHOPPING</TopButton>
           </Link>
           <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
-            <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          <Link to= "/messege">
-          <TopButton type="filled">CHAT WITH OWNER</TopButton>
+          <Link to="/messege">
+            <TopButton type="filled">CHAT WITH OWNER</TopButton>
           </Link>
         </Top>
 
@@ -204,40 +213,40 @@ const Cart = () => {
 
           <Info>
 
-            {cart.products.map((product)=>(
-            
+            {cart.products.map((product) => (
+
               <Product key={product.id} product={product} handleRemoveProduct={handleRemoveProduct}>
 
-              <ProductDetail>
-                <Image src={product.img} />
-                <Details>
-                  <ProductName>
-                    <b>Product:</b> {product.title}
-                  </ProductName>
-                  <ProductId>
-                    <b>ID:</b> {product.id}
-                  </ProductId>
-                  <ProductColor color="black" />
-                  <ProductSize>
-                    <b>Size:</b> A
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <ProductAmount> Quantity: {product.quantity} </ProductAmount>
-                </ProductAmountContainer>
-                <ProductPrice> {product.price*product.quantity} /=</ProductPrice>
-              </PriceDetail>
+                <ProductDetail>
+                  <Image src={product.img} />
+                  <Details>
+                    <ProductName>
+                      <b>Product:</b> {product.title}
+                    </ProductName>
+                    <ProductId>
+                      <b>ID:</b> {product.id}
+                    </ProductId>
+                    <ProductColor color="black" />
+                    <ProductSize>
+                      <b>Size:</b> A
+                    </ProductSize>
+                  </Details>
+                </ProductDetail>
 
-              <RemoveButton onClick={() => handleRemoveProduct(product.id)}>REMOVE</RemoveButton>
-            
-            </Product>
+                <PriceDetail>
+                  <ProductAmountContainer>
+                    <ProductAmount> Quantity: {product.quantity} </ProductAmount>
+                  </ProductAmountContainer>
+                  <ProductPrice> {product.price * product.quantity} /=</ProductPrice>
+                </PriceDetail>
+
+                <RemoveButton onClick={() => handleRemoveProduct(product.id)}>REMOVE</RemoveButton>
+
+              </Product>
 
             ))}
 
-            
+
 
 
           </Info>
@@ -249,7 +258,7 @@ const Cart = () => {
               <SummaryItemText>Subtotal</SummaryItemText>
               <SummaryItemPrice> {cart.total} /=</SummaryItemPrice>
             </SummaryItem>
-           
+
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice> {cart.total} /=</SummaryItemPrice>

@@ -2,6 +2,8 @@ import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from "@m
 import styled from "styled-components";
 import React from "react";
 import { Link } from "react-router-dom";
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
 
 const Info = styled.div`
   opacity: 0;
@@ -51,6 +53,9 @@ const Image = styled.img`
   height: 50%;
   z-index: 2;        /* the image will be in front of the circle */
   margin-bottom: 10px;
+  max-width: 80%;
+  object-fit: cover;
+  overflow: hidden;
 `;
 
 const Description = styled.div`,
@@ -58,8 +63,8 @@ const Description = styled.div`,
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 50%;
-  padding:20px;
+  width: 100%;
+  padding:5px 20px;
 `
 
 const Icon = styled.div`
@@ -102,6 +107,16 @@ const Price = styled.span`
 
 
 const Product = ({ item }) => {
+  const dispatch = useDispatch();
+
+  const handleClick = () =>     // Update Cart 
+  {
+    const quantity = 1;
+    const price = item.price
+    dispatch(
+      addProduct({ ...item, quantity, price })
+    );
+  };
   return (
     <Container>
 
@@ -110,17 +125,17 @@ const Product = ({ item }) => {
       <Description>
         <Paragraph><Title>{item.title}
         </Title></Paragraph>
-          {item.price && (<Paragraph><Price>Tk {item.price}</Price></Paragraph>)}
-          <Paragraph>{item.desc}</Paragraph>
-          <Paragraph>{item.category}</Paragraph>
-          {/* <Paragraph><Type><strong>Status: </strong>{item.type}</Type></Paragraph> */}
+        <Paragraph><Price>{item.price ? (<>Tk {item.price}</>) : (<>For Exchange</>)}</Price></Paragraph>
+        <Paragraph>{item.desc}</Paragraph>
+        <Paragraph>{item.category}</Paragraph>
+        {/* <Paragraph><Type><strong>Status: </strong>{item.type}</Type></Paragraph> */}
       </Description>
 
 
       <Info>
-        <Icon>
+        {item.purpose ==="Sell" && (<Icon onClick={handleClick}>
           <ShoppingCartOutlined />
-        </Icon>
+        </Icon>)}
 
         <Icon>
           <Link to={`/product/${item._id}`}>
@@ -128,9 +143,9 @@ const Product = ({ item }) => {
           </Link>
         </Icon>
 
-        <Icon>
+        {/* <Icon>
           <FavoriteBorderOutlined />
-        </Icon>
+        </Icon> */}
 
       </Info>
 
